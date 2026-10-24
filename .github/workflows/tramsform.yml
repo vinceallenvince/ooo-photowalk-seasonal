@@ -24,19 +24,22 @@ jobs:
           python-version: "3.12"
 
       - name: Install deps
-        run: pip install openai
+        run: pip install openai requests pillow
 
       - name: Transform new pigeons
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPEN_AI_KEY }}
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
           IMAGE_MODEL: gpt-image-2.5-sunburst
         run: python scripts/transform.py
 
-      - name: Commit results
+      - name: Commit results and notify
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
         run: |
           git config user.name "pigeon-bot"
           git config user.email "pigeon-bot@users.noreply.github.com"
-          git add transformed
+          git add transformed classifications
           if git diff --cached --quiet; then
             echo "Nothing new to commit"
             exit 0
@@ -44,3 +47,13 @@ jobs:
           git commit -m "Christmas pigeons"
           git pull --rebase
           git push
+
+          latest=$(git diff --name-only HEAD~1 HEAD -- transformed | sort | tail -1)
+          if [ -n "$NTFY_TOPIC" ] && [ -n "$latest" ]; then
+            curl -s \
+              -H "Title: New Christmas pigeon 🎄" \
+              -H "Click: https://vinceallenvince.github.io/walk-and-hack/" \
+              -H "Attach: https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main/$latest" \
+              -d "Tap to see the feed" \
+              "https://ntfy.sh/$NTFY_TOPIC" > /dev/null
+          fi
