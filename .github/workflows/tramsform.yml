@@ -51,10 +51,14 @@ jobs:
 
           latest=$(git diff --name-only HEAD~1 HEAD -- transformed | sort | tail -1)
           if [ -n "$BARK_KEY" ] && [ -n "$latest" ]; then
+            stem=$(basename "$latest" .png)
+            slogan=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1])).get('direction',{}).get('slogan',''))" "classifications/$stem.json" 2>/dev/null || true)
+            body="Tap to see it"
+            [ -n "$slogan" ] && body="“$slogan” · Tap to see it"
             curl -s -X POST "https://api.day.app/$BARK_KEY" \
               --data-urlencode "title=New Christmas pigeon 🎄" \
-              --data-urlencode "body=Tap to see the feed" \
-              --data-urlencode "url=https://vinceallenvince.github.io/walk-and-hack/" \
+              --data-urlencode "body=$body" \
+              --data-urlencode "url=https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main/$latest" \
               --data-urlencode "group=pigeons" \
               --data-urlencode "level=timeSensitive" > /dev/null
           fi
