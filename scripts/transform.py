@@ -109,21 +109,26 @@ def classify(path: pathlib.Path) -> dict:
 
 
 def notify_no_pigeon(path: pathlib.Path) -> None:
-    topic = os.environ.get("NTFY_TOPIC")
-    if not topic:
+    key = os.environ.get("BARK_KEY")
+    if not key:
         return
     photo_url = (
         "https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main/"
         f"pigeons/{path.name}"
     )
     try:
-        requests.post(
-            f"https://ntfy.sh/{topic}",
-            data="Pigeon not detected.".encode(),
-            headers={"Attach": photo_url, "Priority": "high"},
+        r = requests.post(
+            f"https://api.day.app/{key}",
+            data={
+                "title": "Pigeon not detected.",
+                "body": "Tap to see the photo.",
+                "url": photo_url,
+                "group": "pigeons",
+                "level": "timeSensitive",
+            },
             timeout=15,
         )
-        print("   sent no-pigeon notification")
+        print(f"   sent no-pigeon notification ({r.status_code})")
     except Exception as e:
         print(f"   notification failed: {e}")
 
