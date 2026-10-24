@@ -1,0 +1,15 @@
+{
+  "subject": "no_bird",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "no_bird",
+      "confidence": 1.0,
+      "probabilities": {
+        "pigeon": 0.0,
+        "other_bird": 0.0,
+        "no_bird": 1.0
+      }
+    }
+  }
+}
