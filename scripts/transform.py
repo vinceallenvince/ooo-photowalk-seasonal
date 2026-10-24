@@ -108,6 +108,26 @@ def classify(path: pathlib.Path) -> dict:
     return {"subject": choice_value(answers.get("subject")), "raw": answers}
 
 
+def notify_no_pigeon(path: pathlib.Path) -> None:
+    topic = os.environ.get("NTFY_TOPIC")
+    if not topic:
+        return
+    photo_url = (
+        "https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main/"
+        f"pigeons/{path.name}"
+    )
+    try:
+        requests.post(
+            f"https://ntfy.sh/{topic}",
+            data="Pigeon not detected.".encode(),
+            headers={"Attach": photo_url},
+            timeout=15,
+        )
+        print("   sent no-pigeon notification")
+    except Exception as e:
+        print(f"   notification failed: {e}")
+
+
 todo = [
     p
     for p in sorted(SRC.glob("*.jpg"), reverse=True)  # newest first
@@ -136,6 +156,7 @@ for src in todo:
         print(f"   subject: {subject}")
         if subject is not None and subject != "pigeon":
             print("   not a pigeon, skipping transform")
+            notify_no_pigeon(src)
             continue
         if subject is None:
             print("   no classification, transforming anyway")
