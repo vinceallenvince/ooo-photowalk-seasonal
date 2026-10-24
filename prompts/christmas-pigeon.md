@@ -9,7 +9,7 @@ First, determine whether the photograph contains a visible pigeon.
 There are two possible outcomes:
 
 1. Pigeon present: Dress the existing pigeon in a festive knitted Christmas sweater with a bird-related holiday slogan and complementary Christmas accessories.
-2. No pigeon present: Preserve the original photograph and add a large, funny text overlay about the absence of a pigeon.
+2. No pigeon present: Preserve the original photograph and add a large, funny, lo-fi computer-style text overlay about the absence of a pigeon.
 
 Never introduce a pigeon that was not present in the original photograph.
 
@@ -144,11 +144,11 @@ Do not manufacture comedy through exaggerated expressions, theatrical poses, or 
 
 Exercise creativity primarily through the sweater slogan, knitted patterns, colors, and accessories.
 
-7. No Pigeon Found — Humorous Text Overlay
+7. No Pigeon Found — Lo-Fi Internet Meme
 
 If the original photograph contains no identifiable pigeon, do not attempt to create one.
 
-Instead, return the original photograph with a large, playful text overlay acknowledging the missing pigeon.
+Instead, return the original photograph with a large, humorous text overlay styled like an early-internet meme.
 
 Image preservation
 
@@ -179,20 +179,40 @@ Use these examples as inspiration. Feel free to invent a shorter, funnier altern
 
 Favor concise, immediately understandable humor.
 
-Typography and placement
+Typography and visual treatment
 
-* Use large, bold, highly legible text.
-* Make the text a prominent visual element, easily readable on a mobile phone.
+The overlay should evoke an amateur internet meme from the late 1990s or early 2000s.
+
+Think early personal websites, primitive image editors, pixel fonts, and deliberately crude digital graphics.
+
+* Use very large, bold, blocky computer-style lettering.
+* Favor pixelated bitmap fonts, chunky monospace fonts, or primitive system fonts.
+* Use all caps for maximum impact.
+* Make the text immediately readable on a mobile phone.
 * Prefer one or two short lines.
-* Use playful, festive typography appropriate for a humorous Christmas greeting.
-* Choose contrasting colors such as white, cream, red, or green based on the original image.
-* Add a subtle outline or shadow if necessary for readability.
-* Position the text where it is most readable without unnecessarily obscuring important elements of the original photograph.
+* Use high-contrast colors such as bright white, yellow, cyan, lime green, or red.
+* Apply a thick black outline, hard-edged drop shadow, or simple contrasting rectangular background when needed.
+* Favor hard edges and flat colors over polished gradients or sophisticated effects.
+* Allow slightly awkward spacing or deliberately unsophisticated placement.
+* Position the text prominently, preferably across the upper or central portion of the image.
 * Maintain the original image dimensions and aspect ratio.
 
-The text should look like an intentional, well-designed caption placed over an otherwise unchanged photograph.
+The text should feel as though someone opened the photograph in a primitive image editor and added an oversized caption using the most ridiculous font available.
 
-Avoid additional decorative graphics, stickers, borders, or illustrations.
+Avoid modern graphic design aesthetics.
+
+Do not use elegant typography, cinematic titles, refined layouts, contemporary social-media templates, or professionally designed holiday-card styling.
+
+The intended effect is crude, nostalgic, playful, and intentionally low-budget.
+
+The humor should come from the absurdly dramatic caption applied to an otherwise completely ordinary photograph.
+
+Additional constraints
+
+* Do not add clip art, emojis, stickers, decorative borders, or illustrations.
+* Do not add fake computer windows, browser chrome, or interface elements.
+* Do not alter the underlying photograph to make it look retro.
+* Apply the lo-fi treatment only to the text overlay, not to the photograph itself.
 
 8. Final Output
 
@@ -211,7 +231,7 @@ When a pigeon is present
 When no pigeon is present
 
 * Preserve the original photograph without altering its visual content.
-* Add one large, legible, humorous Christmas-themed text overlay about the missing pigeon.
+* Add one large, legible, humorous Christmas-themed text overlay in a lo-fi early-internet meme style.
 * Do not generate or insert any pigeons or other animals.
 * Do not add Christmas clothing, accessories, decorations, or unrelated objects.
 * Maintain the original image dimensions and aspect ratio.
@@ -221,6 +241,6 @@ Final priority order:
 1. Accurately determine whether a pigeon is present.
 2. Preserve the original photograph.
 3. Apply only the transformation appropriate to that determination.
-4. Use humor through festive clothing or a clever text overlay.
+4. Use humor through festive clothing or a crude, nostalgic text overlay.
 
-Success criterion: If a pigeon exists, the result should look like the original photograph with an absurdly festive pigeon. If no pigeon exists, the result should look like the original photograph with a large, funny caption acknowledging the pigeon’s absence.
+Success criterion: If a pigeon exists, the result should look like the original photograph with an absurdly festive pigeon. If no pigeon exists, the result should look like an ordinary photograph that someone inexplicably turned into a ridiculous early-internet Christmas meme about missing pigeons.
