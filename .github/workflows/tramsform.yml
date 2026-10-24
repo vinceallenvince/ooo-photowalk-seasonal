@@ -1,0 +1,46 @@
+name: Transform pigeons
+
+on:
+  push:
+    branches: [main]
+    paths: ["pigeons/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: transform-pigeons
+  cancel-in-progress: false
+
+jobs:
+  transform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install openai
+
+      - name: Transform new pigeons
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          IMAGE_MODEL: gpt-image-2.5-sunburst
+        run: python scripts/transform.py
+
+      - name: Commit results
+        run: |
+          git config user.name "pigeon-bot"
+          git config user.email "pigeon-bot@users.noreply.github.com"
+          git add transformed
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit"
+            exit 0
+          fi
+          git commit -m "Christmas pigeons"
+          git pull --rebase
+          git push
