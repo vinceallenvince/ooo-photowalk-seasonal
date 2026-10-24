@@ -2,31 +2,60 @@ Christmas Pigeon — Image Transformation Prompt
 
 Objective
 
-Transform the provided photograph of a pigeon into a humorous, photorealistic Christmas portrait.
+Transform a user-provided photograph into a humorous Christmas-themed image.
 
-Dress the pigeon in a festive knitted Christmas sweater featuring a clever bird-related holiday slogan, complemented by one or two Christmas accessories.
+First, determine whether the photograph contains a visible pigeon.
 
-The central creative principle is understated visual absurdity: an ordinary pigeon, in an ordinary environment, inexplicably dressed for Christmas.
+There are two possible outcomes:
 
-The result should look like an authentic photograph rather than a staged or digitally fabricated scene.
+1. Pigeon present: Dress the existing pigeon in a festive knitted Christmas sweater with a bird-related holiday slogan and complementary Christmas accessories.
+2. No pigeon present: Preserve the original photograph and add a large, funny text overlay about the absence of a pigeon.
 
-1. Preserve the Original Photograph
+Never introduce a pigeon that was not present in the original photograph.
+
+The central creative principle is understated visual absurdity: an ordinary pigeon, in an ordinary environment, inexplicably dressed for Christmas—or an ordinary photograph humorously acknowledging that no pigeon was found.
+
+1. Inspect the Original Photograph
+
+Before making any changes, examine the uploaded image and determine whether a pigeon is visibly present.
+
+A pigeon may be partially obscured, distant, or appear anywhere within the frame.
+
+Only treat a pigeon as present if it is reasonably identifiable in the original photograph.
+
+Do not infer the presence of a pigeon merely because the setting is a park, sidewalk, rooftop, or other location where pigeons are commonly found.
+
+Do not mistake unrelated objects, shadows, or other birds for pigeons.
+
+If a pigeon is present
+
+Follow Sections 2–6 to transform the existing pigeon.
+
+If no pigeon is present
+
+Skip all pigeon clothing and accessory instructions.
+
+Follow Section 7 to add a humorous text overlay to the unchanged photograph.
+
+These outcomes are mutually exclusive. Never generate, insert, or invent a pigeon.
+
+2. Preserve the Original Photograph
 
 Image preservation is the highest priority.
 
-Treat the uploaded photograph as the source of truth. Modify only what is necessary to add the Christmas clothing and accessories convincingly.
+Treat the uploaded photograph as the source of truth. Modify only what is necessary to add Christmas clothing and accessories convincingly.
 
-* Preserve the pigeon's distinctive appearance, including feather colors, patterns, eyes, beak, proportions, and anatomy.
+* Preserve the pigeon’s distinctive appearance, including feather colors, patterns, eyes, beak, proportions, and anatomy.
 * Preserve the original environment, including architecture, vegetation, background objects, weather, and season.
 * Maintain the original lighting, shadows, perspective, camera angle, and depth of field.
-* Preserve the pigeon's original pose, gaze, and expression wherever possible.
+* Preserve the pigeon’s original pose, gaze, and expression wherever possible.
 * Do not relocate the pigeon or introduce a new background.
 * Do not add snow, Christmas decorations, lights, or other environmental elements that were not present in the original photograph.
-* Avoid unnecessary changes to the image's composition.
+* Avoid unnecessary changes to the composition.
 
-Minor adjustments to the pigeon's pose, head position, or framing are permitted only when they materially improve the outfit's appearance or the understated absurdity of the scene.
+Minor adjustments are permitted only when necessary to convincingly accommodate the outfit.
 
-2. Natural Pigeon Appearance and Behavior
+3. Natural Pigeon Appearance and Behavior
 
 Let the pigeon look and behave like an ordinary pigeon.
 
@@ -34,13 +63,13 @@ Let the pigeon look and behave like an ordinary pigeon.
 * Do not intentionally make the pigeon appear serious, grumpy, confused, happy, or excited.
 * Avoid anthropomorphic facial expressions, gestures, or poses.
 * Maintain realistic bird anatomy and proportions.
-* Allow the pigeon's existing appearance and posture to contribute naturally to the humor.
+* Allow the pigeon’s existing appearance and posture to contribute naturally to the humor.
 
 The pigeon does not need to communicate a particular emotion.
 
-The outfit is the joke, not the pigeon's expression.
+The outfit is the joke, not the pigeon’s expression.
 
-3. Christmas Sweater
+4. Christmas Sweater
 
 Dress the pigeon in a detailed, realistic knitted Christmas sweater with a prominently displayed bird-related holiday pun.
 
@@ -48,22 +77,22 @@ Example slogans
 
 Choose one or invent an equally clever alternative:
 
-* "Fleece Navidad"
-* "Merry Birdmas"
-* "Season's Tweetings"
-* "All I Want for Christmas Is Coo"
-* "Coo Ho Ho!"
-* "We Wish You a Merry Chirpmas"
-* "Feliz Navi-Dove"
-* "Deck the Halls with Boughs of Polly"
-* "Have Yourself a Merry Little Tweetmas"
-* "Rockin' Around the Chirpmas Tree"
-* "Jingle Birds"
-* "O Come All Ye Featherful"
-* "Let It Crow"
-* "Silent Flight, Holy Flight"
+* “Fleece Navidad”
+* “Merry Birdmas”
+* “Season’s Tweetings”
+* “All I Want for Christmas Is Coo”
+* “Coo Ho Ho!”
+* “We Wish You a Merry Chirpmas”
+* “Feliz Navi-Dove”
+* “Deck the Halls with Boughs of Polly”
+* “Have Yourself a Merry Little Tweetmas”
+* “Rockin’ Around the Chirpmas Tree”
+* “Jingle Birds”
+* “O Come All Ye Featherful”
+* “Let It Crow”
+* “Silent Flight, Holy Flight”
 
-Favor short, recognizable, genuinely funny puns that will be legible on a small sweater.
+Favor short, recognizable, funny puns that are easy to read on a small sweater.
 
 Sweater design
 
@@ -71,10 +100,10 @@ Sweater design
 * Incorporate traditional Christmas patterns such as snowflakes, Christmas trees, holly, candy canes, or miniature birds.
 * Integrate the slogan into the knitted fabric rather than overlaying digital text.
 * Render the selected slogan exactly, with correct spelling and legible lettering.
-* Fit the sweater naturally around the pigeon's body, accommodating its wings and anatomy.
-* Keep the pigeon's head and distinctive natural features visible.
+* Fit the sweater naturally around the pigeon’s body, accommodating its wings and anatomy.
+* Keep the pigeon’s head and distinctive natural features visible.
 
-4. Christmas Accessories
+5. Christmas Accessories
 
 Choose one or two complementary accessories that enhance the festive absurdity.
 
@@ -94,22 +123,18 @@ Accessories should look like real miniature costume pieces, fitted convincingly 
 
 Choose a cohesive combination rather than adding as many decorations as possible.
 
-Avoid obscuring the pigeon's eyes, beak, or distinctive features.
+Avoid obscuring the pigeon’s eyes, beak, or distinctive features.
 
-5. Photographic Realism
+6. Photographic Realism and Creative Direction
 
 The transformed image must be convincingly photorealistic.
 
-* Match the original photograph's lighting, exposure, shadows, and color temperature.
+* Match the original photograph’s lighting, exposure, shadows, and color temperature.
 * Preserve realistic feather textures and iridescence.
 * Render fabric with detailed stitching, natural folds, and believable contact with the bird.
-* Ensure clothing follows the pigeon's anatomy.
-* Preserve the original background's depth of field and photographic characteristics.
+* Ensure clothing follows the pigeon’s anatomy.
+* Preserve the original background’s depth of field and photographic characteristics.
 * Avoid illustration, cartoon styling, CGI aesthetics, artificial-looking feathers, or exaggerated proportions.
-
-The clothing should appear to have been physically present when the original photograph was taken.
-
-6. Creative Direction
 
 The intended humor is subtle, absurd, and ironic.
 
@@ -117,30 +142,85 @@ Imagine encountering an otherwise ordinary pigeon in its natural environment, ex
 
 Do not manufacture comedy through exaggerated expressions, theatrical poses, or additional visual gags.
 
-Allow the contrast between the ordinary photograph and the ridiculous clothing to create the humor.
+Exercise creativity primarily through the sweater slogan, knitted patterns, colors, and accessories.
 
-Exercise creativity primarily through:
+7. No Pigeon Found — Humorous Text Overlay
 
-* The sweater slogan.
-* The sweater's knitted patterns and colors.
-* The selection and combination of accessories.
-* Small details in the clothing that reward closer inspection.
+If the original photograph contains no identifiable pigeon, do not attempt to create one.
 
-Use the provided examples as inspiration, not as a rigid template.
+Instead, return the original photograph with a large, playful text overlay acknowledging the missing pigeon.
 
-7. Final Output
+Image preservation
 
-Generate one high-quality, photorealistic image.
+* Preserve the original photograph exactly as provided.
+* Do not add, remove, replace, or modify any objects, animals, people, or environmental features.
+* Do not change the background, lighting, colors, composition, or camera perspective.
+* Do not introduce a pigeon, pigeon silhouette, cartoon bird, or other bird imagery.
+* The only permitted change is the addition of the text overlay and minimal styling needed to make it readable.
 
-Requirements:
+Text content
 
-* Preserve the pigeon's recognizable identity and natural appearance.
-* Preserve the original environment and photographic composition as closely as possible.
-* Preserve the pigeon's original expression, gaze, and posture unless a minor adjustment clearly improves the result.
+Choose a short, funny, Christmas-themed message about the absence of a pigeon.
+
+Examples:
+
+* “NO PIGEON, NOEL!”
+* “WHERE’S THE CHRISTMAS COO?”
+* “O COME, ALL YE PIGEONS!”
+* “HAVE YOURSELF A MERRY LITTLE PIGEON HUNT”
+* “NOT A COO IN SIGHT!”
+* “ALL IS CALM. ALL PIGEONS ARE GONE.”
+* “SANTA, WE HAVE A PIGEON PROBLEM.”
+* “ZERO PIGEONS. ZERO PRESENTS.”
+* “THE PIGEON HAS FLOWN THE COOP!”
+* “BAH, HUM-COO!”
+
+Use these examples as inspiration. Feel free to invent a shorter, funnier alternative.
+
+Favor concise, immediately understandable humor.
+
+Typography and placement
+
+* Use large, bold, highly legible text.
+* Make the text a prominent visual element, easily readable on a mobile phone.
+* Prefer one or two short lines.
+* Use playful, festive typography appropriate for a humorous Christmas greeting.
+* Choose contrasting colors such as white, cream, red, or green based on the original image.
+* Add a subtle outline or shadow if necessary for readability.
+* Position the text where it is most readable without unnecessarily obscuring important elements of the original photograph.
+* Maintain the original image dimensions and aspect ratio.
+
+The text should look like an intentional, well-designed caption placed over an otherwise unchanged photograph.
+
+Avoid additional decorative graphics, stickers, borders, or illustrations.
+
+8. Final Output
+
+Generate one high-quality image based on the uploaded photograph.
+
+When a pigeon is present
+
+* Preserve the pigeon’s recognizable identity and natural appearance.
+* Preserve the original environment and photographic composition.
 * Add a realistic knitted Christmas sweater.
 * Include one clearly legible bird-related Christmas slogan.
 * Add one or two complementary Christmas accessories.
-* Maintain believable anatomy, fabric textures, lighting, and shadows.
-* Do not introduce unrelated objects, environmental changes, captions, watermarks, or borders.
+* Maintain realistic anatomy, lighting, and photographic detail.
+* Do not add external captions, watermarks, or borders.
 
-Success criterion: The result should feel like the original photograph, with the smallest possible set of changes needed to make the pigeon look absurdly festive. The humor should emerge naturally from that contrast.
+When no pigeon is present
+
+* Preserve the original photograph without altering its visual content.
+* Add one large, legible, humorous Christmas-themed text overlay about the missing pigeon.
+* Do not generate or insert any pigeons or other animals.
+* Do not add Christmas clothing, accessories, decorations, or unrelated objects.
+* Maintain the original image dimensions and aspect ratio.
+
+Final priority order:
+
+1. Accurately determine whether a pigeon is present.
+2. Preserve the original photograph.
+3. Apply only the transformation appropriate to that determination.
+4. Use humor through festive clothing or a clever text overlay.
+
+Success criterion: If a pigeon exists, the result should look like the original photograph with an absurdly festive pigeon. If no pigeon exists, the result should look like the original photograph with a large, funny caption acknowledging the pigeon’s absence.
