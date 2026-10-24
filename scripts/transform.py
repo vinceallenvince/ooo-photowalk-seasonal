@@ -120,7 +120,7 @@ def notify_no_pigeon(path: pathlib.Path) -> None:
         requests.post(
             f"https://ntfy.sh/{topic}",
             data="Pigeon not detected.".encode(),
-            headers={"Attach": photo_url},
+            headers={"Attach": photo_url, "Priority": "high"},
             timeout=15,
         )
         print("   sent no-pigeon notification")
