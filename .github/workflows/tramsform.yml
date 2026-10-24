@@ -53,6 +53,7 @@ jobs:
           if [ -n "$NTFY_TOPIC" ] && [ -n "$latest" ]; then
             curl -s \
               -H "Title: New Christmas pigeon 🎄" \
+              -H "Priority: high" \
               -H "Click: https://vinceallenvince.github.io/walk-and-hack/" \
               -H "Attach: https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main/$latest" \
               -d "Tap to see the feed" \
