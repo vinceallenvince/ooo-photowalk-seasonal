@@ -1,0 +1,52 @@
+{
+  "subject": "pigeon",
+  "setting": "street",
+  "activity": "walking",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 1.0,
+      "probabilities": {
+        "pigeon": 1.0,
+        "other_bird": 0.0,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "street",
+      "confidence": 1.0,
+      "probabilities": {
+        "indoors": 0.0,
+        "subway": 0.0,
+        "street": 1.0,
+        "park": 0.0,
+        "ledge": 0.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "walking",
+      "confidence": 0.95,
+      "probabilities": {
+        "eating": 0.01,
+        "walking": 0.96,
+        "perched": 0.03,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "christmas": {
+      "style": "warm",
+      "garment": "a red-and-green Fair Isle knitted Christmas sweater",
+      "accessories": [
+        "miniature red earmuffs",
+        "a striped knitted Christmas scarf"
+      ],
+      "slogan": "We Wish You a Merry Chirpmas",
+      "phrase": "slogan"
+    }
+  }
+}
