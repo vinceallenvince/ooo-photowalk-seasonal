@@ -103,24 +103,26 @@ Copy the token right away, because GitHub shows it only once.
 
 Open **Shortcuts**, tap **+**, and name the shortcut **Post Pigeon**. In its details (ⓘ), turn on **Show in Share Sheet**.
 
-Then add these actions in order, using the search bar at the bottom. Text in **bold** below means a variable pill: tap the field, then pick the variable from the bar above the keyboard. Don't type it in brackets.
+The 📷 in each row opens a screenshot of that step. Step 8's headers aren't shown, since they hold your token.
 
-| # | Action | Settings |
-|---|---|---|
-| 1 | *Receive* (auto-added) | Receive **Images** from Share Sheet · If there's no input: **Ask For** |
-| 2 | Convert Image | Convert **Shortcut Input** to **JPEG** · Quality ~0.7 · **Preserve Metadata: off** (strips GPS) |
-| 3 | Resize Image | Resize **Converted Image** to width **1200**, height auto |
-| 4 | Base64 Encode | **Encode** **Resized Image** · Line Breaks: **None** |
-| 5 | Format Date | **Current Date** · Date Format: **Custom** · `yyyyMMdd-HHmmss` |
-| 6 | Choose from Menu | Prompt `Theme` · items `halloween`, `christmas` · see below |
-| 7 | Text | `pigeons/`**Menu Result**`/pigeon-`**Formatted Date**`.jpg` |
-| 8 | Get Contents of URL | see below |
-| 9 | Get Dictionary Value | Get **Value** for `content` in **Contents of URL** |
-| 10 | Get Dictionary Value | Get **Value** for `download_url` in **Dictionary Value** |
-| 11 | Copy to Clipboard | **Dictionary Value** |
-| 12 | Show Notification | `🐦 Posted` |
+Add these actions in order, using the search bar at the bottom. Text in **bold** below means a variable pill: tap the field, then pick the variable from the bar above the keyboard. Don't type it in brackets.
 
-**Step 6, Choose from Menu:** inside each branch, add a **Text** action holding the item's name (`halloween` under **halloween**, `christmas` under **christmas**). **Menu Result** is the output of the branch's last action, so an empty branch gives an empty theme. Item names must match a folder in `themes/` exactly, lowercase. To add a theme, add a menu item and its Text action.
+| # | Action | Settings | |
+|---|---|---|---|
+| 1 | *Receive* (auto-added) | Receive **Images** from Share Sheet · If there's no input: **Ask For** | [📷](docs/shortcut/steps-01-05.png) |
+| 2 | Convert Image | Convert **Shortcut Input** to **JPEG** · Quality ~0.7 · **Preserve Metadata: off** (strips GPS) | [📷](docs/shortcut/steps-01-05.png) |
+| 3 | Resize Image | Resize **Converted Image** to width **1200**, height auto | [📷](docs/shortcut/steps-01-05.png) |
+| 4 | Base64 Encode | **Encode** **Resized Image** · Line Breaks: **None** | [📷](docs/shortcut/steps-01-05.png) |
+| 5 | Format Date | **Current Date** · Date Format: **Custom** · `yyyyMMdd-HHmmss` | [📷](docs/shortcut/steps-01-05.png) |
+| 6 | Choose from Menu | Prompt `Choose a theme` · items `halloween`, `christmas` · see below | [📷](docs/shortcut/step-06.png) |
+| 7 | Text | `pigeons/`**Menu Result**`/pigeon-`**Formatted Date**`.jpg` | [📷](docs/shortcut/steps-06-08.png) |
+| 8 | Get Contents of URL | see below | [📷](docs/shortcut/steps-06-08.png) |
+| 9 | Get Dictionary Value | Get **Value** for `content` in **Contents of URL** | [📷](docs/shortcut/steps-08-12.png) |
+| 10 | Get Dictionary Value | Get **Value** for `download_url` in **Dictionary Value** | [📷](docs/shortcut/steps-08-12.png) |
+| 11 | Copy to Clipboard | **Dictionary Value** | [📷](docs/shortcut/steps-08-12.png) |
+| 12 | Show Notification | `🐦 Posted` | [📷](docs/shortcut/steps-08-12.png) |
+
+**Step 6, Choose from Menu** ([christmas branch](docs/shortcut/step-06.png), [halloween branch and End Menu](docs/shortcut/steps-06-08.png)): inside each branch, add a **Text** action holding the item's name (`halloween` under **halloween**, `christmas` under **christmas**). **Menu Result** is the output of the branch's last action, so an empty branch gives an empty theme. Item names must match a folder in `themes/` exactly, lowercase. To add a theme, add a menu item and its Text action.
 
 **Step 8, Get Contents of URL:**
 
