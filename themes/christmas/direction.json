@@ -1,0 +1,54 @@
+{
+  "name": "christmas",
+  "title": "New Christmas pigeon 🎄",
+  "season": ["11-01", "12-31"],
+  "placeholders": ["GARMENT", "SLOGAN", "ACCESSORIES"],
+  "styles": {
+    "light": {
+      "when_setting": ["indoors"],
+      "pick": {
+        "garment": [
+          "a lightweight red-and-green cotton holiday tee with a small printed Christmas pattern",
+          "a festive red velvet vest with gold trim"
+        ]
+      },
+      "sample": {
+        "accessories": {
+          "from": [
+            "an oversized plaid Christmas bow tie",
+            "a small jingle-bell collar",
+            "a tiny red velvet ribbon bow"
+          ],
+          "count": 1
+        }
+      }
+    },
+    "warm": {
+      "default": true,
+      "pick": {
+        "garment": [
+          "a chunky hand-knitted Christmas sweater with snowflake and tree patterns",
+          "a red-and-green Fair Isle knitted Christmas sweater"
+        ]
+      },
+      "sample": {
+        "accessories": {
+          "from": [
+            "a striped knitted Christmas scarf",
+            "miniature red earmuffs",
+            "a Santa hat with white fur trim",
+            "a plush reindeer antler headband"
+          ],
+          "count": 2
+        }
+      }
+    }
+  },
+  "phrase": "slogan",
+  "phrases": {
+    "eating": ["Merry Crumbmas", "All I Want for Christmas Is Crumbs", "All I Want for Christmas Is Coo"],
+    "walking": ["Rockin' Around the Chirpmas Tree", "Coo Ho Ho!", "We Wish You a Merry Chirpmas"],
+    "perched": ["Silent Flight, Holy Flight", "Season's Tweetings", "Merry Birdmas"],
+    "flying": ["Jingle Birds", "Let It Crow", "Fleece Navidad"]
+  }
+}

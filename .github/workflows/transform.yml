@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths: ["pigeons/**"]
   workflow_dispatch:
+    inputs:
+      theme:
+        description: "Theme to use (blank = repo THEME variable, else by date)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -27,7 +32,9 @@ jobs:
         run: pip install openai requests pillow
 
       - name: Transform new pigeons
+        id: transform
         env:
+          THEME: ${{ inputs.theme || vars.THEME }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
           BARK_KEY: ${{ secrets.BARK_KEY }}
@@ -37,6 +44,10 @@ jobs:
       - name: Commit results and notify
         env:
           BARK_KEY: ${{ secrets.BARK_KEY }}
+          THEME_NAME: ${{ steps.transform.outputs.theme }}
+          TITLE: ${{ steps.transform.outputs.title }}
+          PHRASE: ${{ steps.transform.outputs.phrase }}
+          OUT_PATH: ${{ steps.transform.outputs.path }}
         run: |
           git config user.name "pigeon-bot"
           git config user.email "pigeon-bot@users.noreply.github.com"
@@ -45,20 +56,17 @@ jobs:
             echo "Nothing new to commit"
             exit 0
           fi
-          git commit -m "Christmas pigeons"
+          git commit -m "${THEME_NAME:-Classified} pigeons"
           git pull --rebase
           git push
 
-          latest=$(git diff --name-only HEAD~1 HEAD -- transformed | sort | tail -1)
-          if [ -n "$BARK_KEY" ] && [ -n "$latest" ]; then
-            stem=$(basename "$latest" .png)
-            slogan=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1])).get('direction',{}).get('slogan',''))" "classifications/$stem.json" 2>/dev/null || true)
+          if [ -n "$BARK_KEY" ] && [ -n "$OUT_PATH" ]; then
             body="Tap to see it"
-            [ -n "$slogan" ] && body="“$slogan” · Tap to see it"
+            [ -n "$PHRASE" ] && body="“$PHRASE” · Tap to see it"
             curl -s -X POST "https://api.day.app/$BARK_KEY" \
-              --data-urlencode "title=New Christmas pigeon 🎄" \
+              --data-urlencode "title=$TITLE" \
               --data-urlencode "body=$body" \
-              --data-urlencode "url=https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main/$latest" \
+              --data-urlencode "url=https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main/$OUT_PATH" \
               --data-urlencode "group=pigeons" \
               --data-urlencode "level=timeSensitive" > /dev/null
           fi

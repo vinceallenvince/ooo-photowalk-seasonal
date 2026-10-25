@@ -1,6 +1,6 @@
 # walk-and-hack
 
-Snap a pigeon on your iPhone. A minute later it's back on your phone, photorealistically dressed for Christmas.
+Snap a pigeon on your iPhone. A minute later it's back on your phone, photorealistically dressed for the season: Halloween in October, Christmas in November and December.
 
 <table>
   <tr>
@@ -18,9 +18,9 @@ Snap a pigeon on your iPhone. A minute later it's back on your phone, photoreali
 1. **Post:** The **Post Pigeon** iOS Shortcut (share sheet → Post Pigeon) converts the photo to JPEG, resizes it, strips GPS, and commits it to `pigeons/` through the GitHub Contents API.
 2. **Classify:** The push triggers a GitHub Action. [Typesafe](https://docs.typesafe.ai/images) (Jev) answers three questions about the photo: is it a pigeon, where is it, and what is it doing.
 3. **Gate:** Not a pigeon? You get a "Pigeon not detected." push and the run stops, so nothing is spent on image generation.
-4. **Direct:** The script picks the outfit from the setting (indoors gets a light outfit, outdoors gets knitwear) and the slogan from the activity.
-5. **Transform:** OpenAI's image edit endpoint dresses the pigeon using `prompts/christmas-pigeon.md`, filled with that direction.
-6. **Deliver:** The result is committed to `transformed/`, and a [Bark](https://github.com/Finb/Bark) push shows the slogan and opens the image when tapped.
+4. **Direct:** The script picks a theme (photo date, or the `THEME` repo variable), then the outfit from the setting and the slogan from the activity, using `themes/<theme>/direction.json`.
+5. **Transform:** OpenAI's image edit endpoint dresses the pigeon using `themes/<theme>/prompt.md`, filled with that direction.
+6. **Deliver:** The result is committed to `transformed/<theme>/`, and a [Bark](https://github.com/Finb/Bark) push shows the slogan and opens the image when tapped.
 7. **Browse:** Every transformed pigeon appears in the [gallery](https://vinceallenvince.github.io/walk-and-hack/), an edge-to-edge feed served by GitHub Pages.
 
 ```
@@ -33,7 +33,7 @@ Snap a pigeon on your iPhone. A minute later it's back on your phone, photoreali
             │ PUT /repos/.../contents/pigeons/pigeon-<timestamp>.jpg
             ▼
  GitHub repo ─────────────────────────────────────────────────────────────
- │  pigeons/*.jpg ──push──▶ GitHub Action: .github/workflows/tramsform.yml
+ │  pigeons/*.jpg ──push──▶ GitHub Action: .github/workflows/transform.yml
  │                          scripts/transform.py
  │                               │
  │                               ▼
@@ -45,22 +45,22 @@ Snap a pigeon on your iPhone. A minute later it's back on your phone, photoreali
  │                      │              │
  │                      ▼              ▼
  │           ┌───────────────────┐   Bark: "Pigeon not detected."
- │           │ pick outfit +     │     └─ tap ─▶ original photo (raw URL)
- │           │ slogan from scene │
+ │           │ pick theme, then  │     └─ tap ─▶ original photo (raw URL)
+ │           │ outfit + slogan   │
  │           └─────────┬─────────┘
  │                     ▼
  │           ┌───────────────────┐
- │           │ OpenAI image edit │  prompts/christmas-pigeon.md (template)
+ │           │ OpenAI image edit │  themes/<theme>/prompt.md (template)
  │           └─────────┬─────────┘
  │                     ▼
- │           transformed/<name>.png ── commit + push
+ │           transformed/<theme>/<name>.png ── commit + push
  │                     │
  └─────────────────────┼───────────────────────────────────────────────────
-                       ├──▶ Bark: "New Christmas pigeon 🎄 · “<slogan>”"
+                       ├──▶ Bark: "<theme title> · “<slogan>”"
                        │      └─ tap ─▶ transformed image (raw URL)
                        │
                        └──▶ GitHub Pages gallery (index.html)
-                              reads transformed/ via the GitHub API
+                              reads transformed/<theme>/ via the GitHub API
                               vinceallenvince.github.io/walk-and-hack/
 ```
 
@@ -69,11 +69,12 @@ Snap a pigeon on your iPhone. A minute later it's back on your phone, photoreali
 | Path | What it is |
 |---|---|
 | `pigeons/` | Originals, posted by the Shortcut |
-| `classifications/` | Jev's answers and the chosen outfit, one JSON per photo |
-| `transformed/` | Dressed-up results (PNG) |
-| `prompts/christmas-pigeon.md` | Image prompt template (`{{GARMENT}}`, `{{SLOGAN}}`, `{{ACCESSORIES}}`) |
+| `classifications/` | Jev's answers and the chosen direction per theme, one JSON per photo |
+| `transformed/<theme>/` | Dressed-up results (PNG). PNGs directly in `transformed/` predate themes and count as Christmas. |
+| `themes/<theme>/prompt.md` | Image prompt template with `{{PLACEHOLDERS}}` |
+| `themes/<theme>/direction.json` | Title, season, styles by setting, phrases by activity |
 | `scripts/transform.py` | Classify → gate → direct → transform |
-| `.github/workflows/tramsform.yml` | Runs the script on every push to `pigeons/`, then commits and notifies |
+| `.github/workflows/transform.yml` | Runs the script on every push to `pigeons/`, then commits and notifies |
 | `index.html` | The gallery |
 
 ## Setup
@@ -144,7 +145,11 @@ In Photos, tap **Share → Post Pigeon**. The raw image URL lands on your clipbo
 
 ## Tweaks
 
-- **Outfits, slogans, and the indoor rule:** edit the tables at the top of `scripts/transform.py`.
-- **Regenerate a pigeon:** delete its PNG in `transformed/` and run the workflow (Actions → Run workflow).
+- **Outfits, slogans, and rules:** edit `themes/<theme>/direction.json`.
+- **Add a theme:** add `themes/<name>/` with `prompt.md` and `direction.json`. Nothing else.
+- **Pick the theme:** by default the photo's date decides (each theme's `season`). Set the repo variable `THEME` to override, or type a theme into Actions → Run workflow. A photo in `pigeons/<theme>/` always uses that theme.
+- **Re-theme a pigeon:** run the workflow with another theme. The newest photo without that theme's PNG gets one.
+- **Regenerate a pigeon:** delete its PNG in `transformed/<theme>/` and run the workflow (Actions → Run workflow).
 - **Force a rejected photo through:** delete its JSON in `classifications/` and run the workflow.
+- **Gallery filter:** add `?theme=halloween` to the gallery URL.
 - **Cost guard:** each run handles only the newest unprocessed photo (`MAX_PER_RUN = 1`).

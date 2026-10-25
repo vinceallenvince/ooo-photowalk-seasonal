@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Guidance for coding agents working in this repo. See `README.md` for what the app does and `PLAN-themes.md` for the planned multi-theme refactor.
+Guidance for coding agents working in this repo. See `README.md` for what the app does and `PLAN-themes.md` for the multi-theme design.
 
 ## Ownership and style
 
@@ -10,20 +10,20 @@ Guidance for coding agents working in this repo. See `README.md` for what the ap
 
 ## Architecture in one breath
 
-iOS Shortcut ("Post Pigeon") → GitHub Contents API → `pigeons/pigeon-yyyyMMdd-HHmmss.jpg` → push triggers `.github/workflows/tramsform.yml` → `scripts/transform.py`:
+iOS Shortcut ("Post Pigeon") → GitHub Contents API → `pigeons/pigeon-yyyyMMdd-HHmmss.jpg` → push triggers `.github/workflows/transform.yml` → `scripts/transform.py`:
 
 1. Classify with Typesafe/Jev: subject, setting, activity.
 2. Gate: if it's not a pigeon, send a Bark push and stop.
-3. Pick the outfit and slogan from the scene.
-4. Run the OpenAI image edit with `prompts/christmas-pigeon.md`, filled in.
-5. Write `transformed/<stem>.png`.
+3. Choose the theme (photo subfolder, then `THEME`, then the date against each theme's `season`), then the outfit and slogan from `themes/<theme>/direction.json`.
+4. Run the OpenAI image edit with `themes/<theme>/prompt.md`, filled in. The theme is validated first.
+5. Write `transformed/<theme>/<stem>.png`.
 
-The workflow then commits, pushes, and sends the success push through Bark. `index.html`, served by GitHub Pages, lists `transformed/` through the GitHub API.
+The workflow then commits, pushes, and sends the success push through Bark, using the step outputs from the script. `index.html`, served by GitHub Pages, lists `transformed/` and each theme folder through the GitHub API.
 
 ## Key facts
 
-- **Workflow filename:** it really is `tramsform.yml`, a typo. Renaming it is in the plan; until then, don't create a second workflow by accident.
-- **Stray file:** the empty `[Text]` at the root is junk from Shortcut debugging and is safe to delete.
+- **No creative content in Python.** Outfits, slogans, and costumes live in `themes/`. Adding a theme means adding a folder.
+- **Legacy PNGs:** files directly in `transformed/` predate themes and count as Christmas. They stay put so old notification links and the README keep working.
 - **Secrets:**
   - `OPENAI_API_KEY`, `TYPESAFE_API_KEY`, and `BARK_KEY` are used.
   - `NTFY_TOPIC` is obsolete; ntfy was dropped because iOS banners didn't work.
@@ -40,10 +40,10 @@ The workflow then commits, pushes, and sends the success push through Bark. `ind
   - POST to `https://api.day.app/<BARK_KEY>` with form fields `title`, `body`, `url` (opens on tap), `group`, `level=timeSensitive`.
   - No image attachments.
 - **Idempotency:**
-  - A photo is done once `transformed/<stem>.png` exists, or once its `classifications/<stem>.json` says it isn't a pigeon.
-  - To regenerate, delete the PNG. To force a rejected photo through, delete the JSON.
+  - A photo is done for a theme once `transformed/<theme>/<stem>.png` exists, or once its `classifications/<stem>.json` says it isn't a pigeon.
+  - To regenerate, delete the PNG. Old classifications with a top-level `direction` are read as `directions.christmas`. To force a rejected photo through, delete the JSON.
 - **Cost guard:** `MAX_PER_RUN = 1`, newest photo first. Don't raise it without asking, since every OpenAI edit costs money.
-- **Determinism:** outfit choices are seeded by filename, so re-runs pick the same outfit.
+- **Determinism:** choices are seeded by theme plus filename, so re-runs pick the same direction.
 - **No loops:** bot commits use `GITHUB_TOKEN`, so they don't retrigger the workflow. The workflow does `git pull --rebase` before pushing, because the Shortcut may commit at the same time.
 - **Hardcoded repo path:** `vinceallenvince/walk-and-hack` appears in `index.html`, `scripts/transform.py`, the workflow, and the iOS Shortcut. Update all of them on a rename.
 - **Gallery limits:**
@@ -52,7 +52,7 @@ The workflow then commits, pushes, and sends the success push through Bark. `ind
 
 ## Working on it
 
-- **Syntax checks before handing off:** `python3 -m py_compile scripts/transform.py` and `python3 -c "import yaml; yaml.safe_load(open('.github/workflows/tramsform.yml'))"`.
+- **Syntax checks before handing off:** `python3 -m py_compile scripts/transform.py` and `python3 -c "import yaml; yaml.safe_load(open('.github/workflows/transform.yml'))"`.
 - **Local dry runs:** stub `openai` (or skip stage 3), then exercise `pick_direction()` and `build_prompt()`. Assert that no `{{` placeholders remain.
 - **Real runs:** they happen in Actions. Trigger one by posting a photo, or with Actions → Run workflow (`workflow_dispatch`).
 - **Prompt files are creative direction owned by Vince.** Keep his wording; change structure only when asked.
