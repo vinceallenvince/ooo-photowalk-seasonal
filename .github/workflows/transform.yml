@@ -45,7 +45,7 @@ jobs:
           BARK_KEY: ${{ secrets.BARK_KEY }}
           IMAGE_MODEL: gpt-image-2.5-sunburst
           REPLICATE_API_KEY: ${{ secrets.REPLICATE_API_KEY }}
-          FLUX_MODEL: black-forest-labs/flux-2-flex
+          FLUX_MODEL: ${{ vars.FLUX_MODEL || 'black-forest-labs/flux-2-max' }}
         run: python scripts/transform.py
 
       - name: Commit results and notify

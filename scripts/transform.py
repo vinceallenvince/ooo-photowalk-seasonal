@@ -48,7 +48,7 @@ if not RENDERERS or set(RENDERERS) - set(SUFFIX):
     raise SystemExit(f"RENDERERS must be a list of {sorted(SUFFIX)}, got {RENDERERS}")
 
 REPLICATE_KEY = os.environ.get("REPLICATE_API_KEY")
-FLUX_MODEL = os.environ.get("FLUX_MODEL", "black-forest-labs/flux-2-flex")
+FLUX_MODEL = os.environ.get("FLUX_MODEL", "black-forest-labs/flux-2-max")
 RAW = "https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main"
 
 TYPESAFE_URL = "https://api.typesafe.ai/v1/systemone"
