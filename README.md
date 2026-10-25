@@ -1,1 +1,150 @@
 # walk-and-hack
+
+Snap a pigeon on your iPhone. A minute later it's back on your phone, photorealistically dressed for Christmas.
+
+<table>
+  <tr>
+    <th>Before</th>
+    <th>After</th>
+  </tr>
+  <tr>
+    <td><img src="pigeons/pigeon-20261024-151001.jpg" alt="Original photo: a pigeon perched on a storefront awning" width="400"></td>
+    <td><img src="transformed/pigeon-20261024-151001.png" alt="Same photo: the pigeon now wears a Fleece Navidad sweater and a Santa hat" width="400"></td>
+  </tr>
+</table>
+
+## How it works
+
+1. **Post:** The **Post Pigeon** iOS Shortcut (share sheet → Post Pigeon) converts the photo to JPEG, resizes it, strips GPS, and commits it to `pigeons/` through the GitHub Contents API.
+2. **Classify:** The push triggers a GitHub Action. [Typesafe](https://docs.typesafe.ai/images) (Jev) answers three questions about the photo: is it a pigeon, where is it, and what is it doing.
+3. **Gate:** Not a pigeon? You get a "Pigeon not detected." push and the run stops, so nothing is spent on image generation.
+4. **Direct:** The script picks the outfit from the setting (indoors gets a light outfit, outdoors gets knitwear) and the slogan from the activity.
+5. **Transform:** OpenAI's image edit endpoint dresses the pigeon using `prompts/christmas-pigeon.md`, filled with that direction.
+6. **Deliver:** The result is committed to `transformed/`, and a [Bark](https://github.com/Finb/Bark) push shows the slogan and opens the image when tapped.
+7. **Browse:** Every transformed pigeon appears in the [gallery](https://vinceallenvince.github.io/walk-and-hack/), an edge-to-edge feed served by GitHub Pages.
+
+```
+ iPhone
+ ┌──────────────────────┐
+ │ Photos → Share →     │
+ │ "Post Pigeon"        │  JPEG · 1200px · no GPS
+ │ (iOS Shortcut)       │
+ └──────────┬───────────┘
+            │ PUT /repos/.../contents/pigeons/pigeon-<timestamp>.jpg
+            ▼
+ GitHub repo ─────────────────────────────────────────────────────────────
+ │  pigeons/*.jpg ──push──▶ GitHub Action: .github/workflows/tramsform.yml
+ │                          scripts/transform.py
+ │                               │
+ │                               ▼
+ │                     ┌───────────────────┐
+ │                     │ Typesafe / Jev    │  subject · setting · activity
+ │                     │ (classify)        │──▶ classifications/<name>.json
+ │                     └─────────┬─────────┘
+ │                    pigeon? ───┴─── no
+ │                      │              │
+ │                      ▼              ▼
+ │           ┌───────────────────┐   Bark: "Pigeon not detected."
+ │           │ pick outfit +     │     └─ tap ─▶ original photo (raw URL)
+ │           │ slogan from scene │
+ │           └─────────┬─────────┘
+ │                     ▼
+ │           ┌───────────────────┐
+ │           │ OpenAI image edit │  prompts/christmas-pigeon.md (template)
+ │           └─────────┬─────────┘
+ │                     ▼
+ │           transformed/<name>.png ── commit + push
+ │                     │
+ └─────────────────────┼───────────────────────────────────────────────────
+                       ├──▶ Bark: "New Christmas pigeon 🎄 · “<slogan>”"
+                       │      └─ tap ─▶ transformed image (raw URL)
+                       │
+                       └──▶ GitHub Pages gallery (index.html)
+                              reads transformed/ via the GitHub API
+                              vinceallenvince.github.io/walk-and-hack/
+```
+
+## Repo layout
+
+| Path | What it is |
+|---|---|
+| `pigeons/` | Originals, posted by the Shortcut |
+| `classifications/` | Jev's answers and the chosen outfit, one JSON per photo |
+| `transformed/` | Dressed-up results (PNG) |
+| `prompts/christmas-pigeon.md` | Image prompt template (`{{GARMENT}}`, `{{SLOGAN}}`, `{{ACCESSORIES}}`) |
+| `scripts/transform.py` | Classify → gate → direct → transform |
+| `.github/workflows/tramsform.yml` | Runs the script on every push to `pigeons/`, then commits and notifies |
+| `index.html` | The gallery |
+
+## Setup
+
+Repository secrets (Settings → Secrets and variables → Actions):
+
+| Secret | Used for |
+|---|---|
+| `OPENAI_API_KEY` | Image edit |
+| `TYPESAFE_API_KEY` | Classification |
+| `BARK_KEY` | Push notifications (the device key only, not the URL) |
+
+## iOS Shortcut setup
+
+### 1. Create a GitHub token
+
+On your phone, open **https://github.com/settings/personal-access-tokens/new** in Safari and create a fine-grained token:
+
+- **Expiration:** your call. Shorter is safer; when it expires, generate a new token and paste it into the `Authorization` header (action 7 below).
+- **Repository access:** Only select repositories → `walk-and-hack`
+- **Permissions:** Repository permissions → **Contents → Read and write**
+
+Copy the token right away, because GitHub shows it only once.
+
+### 2. Build the Shortcut
+
+Open **Shortcuts**, tap **+**, and name the shortcut **Post Pigeon**. In its details (ⓘ), turn on **Show in Share Sheet**.
+
+Then add these actions in order, using the search bar at the bottom. Text in **bold** below means a variable pill: tap the field, then pick the variable from the bar above the keyboard. Don't type it in brackets.
+
+| # | Action | Settings |
+|---|---|---|
+| 1 | *Receive* (auto-added) | Receive **Images** from Share Sheet · If there's no input: **Ask For** |
+| 2 | Convert Image | Convert **Shortcut Input** to **JPEG** · Quality ~0.7 · **Preserve Metadata: off** (strips GPS) |
+| 3 | Resize Image | Resize **Converted Image** to width **1200**, height auto |
+| 4 | Base64 Encode | **Encode** **Resized Image** · Line Breaks: **None** |
+| 5 | Format Date | **Current Date** · Date Format: **Custom** · `yyyyMMdd-HHmmss` |
+| 6 | Text | `pigeons/pigeon-`**Formatted Date**`.jpg` |
+| 7 | Get Contents of URL | see below |
+| 8 | Get Dictionary Value | Get **Value** for `content` in **Contents of URL** |
+| 9 | Get Dictionary Value | Get **Value** for `download_url` in **Dictionary Value** |
+| 10 | Copy to Clipboard | **Dictionary Value** |
+| 11 | Show Notification | `🐦 Posted` |
+
+**Step 7, Get Contents of URL:**
+
+- **URL:** `https://api.github.com/repos/vinceallenvince/walk-and-hack/contents/`**Text**
+- **Method:** `PUT`
+- **Headers:**
+  - `Authorization`: `Bearer <your token>`, with the word `Bearer`, a space, then the token
+  - `Accept`: `application/vnd.github+json`
+- **Request Body:** JSON
+  - `message`: `Add pigeon`
+  - `content`: **Base64 Encoded**
+  - `branch`: `main`
+
+### 3. Use it
+
+In Photos, tap **Share → Post Pigeon**. The raw image URL lands on your clipboard, and about a minute later a Bark push brings the dressed-up pigeon.
+
+### Troubleshooting
+
+- **The file is 0 bytes:** step 4's input isn't **Resized Image**. A common slip is the pill landing in the Encode/Decode slot instead of the input slot. Delete the action, re-add it, then re-link `content` in step 7.
+- **The filename shows `[Formatted Date]` or `[Text]` literally:** a variable was typed instead of inserted. Clear it and insert the pill.
+- **The filename is `pigeon-.jpg`:** step 5 has no date. Set it to **Current Date**.
+- **The first run worked, later runs fail:** a fixed filename collided with an existing file, because GitHub rejects a PUT to a path that already exists without that file's `sha`. Fix the date variable in step 6.
+- **401 or 404 from GitHub:** check the `Bearer ` prefix, the token's repo access, and that it hasn't expired.
+
+## Tweaks
+
+- **Outfits, slogans, and the indoor rule:** edit the tables at the top of `scripts/transform.py`.
+- **Regenerate a pigeon:** delete its PNG in `transformed/` and run the workflow (Actions → Run workflow).
+- **Force a rejected photo through:** delete its JSON in `classifications/` and run the workflow.
+- **Cost guard:** each run handles only the newest unprocessed photo (`MAX_PER_RUN = 1`).
