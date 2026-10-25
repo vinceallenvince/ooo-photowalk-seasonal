@@ -3,10 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Christmas Pigeons</title>
+<title>Pigeons</title>
 <style>
   html, body { margin: 0; padding: 0; background: #000; }
+  figure { position: relative; margin: 0; }
   img { display: block; width: 100%; height: auto; }
+  figcaption { position: absolute; left: 8px; bottom: 8px; padding: 3px 8px;
+               border-radius: 4px; background: rgba(0,0,0,.55); color: #fff;
+               font: 12px -apple-system, system-ui, sans-serif; }
+  figcaption:empty { display: none; }
   #status { color: #999; font: 14px -apple-system, system-ui, sans-serif;
             padding: 16px; margin: 0; }
 </style>
@@ -15,27 +20,59 @@
 <p id="status">Loading…</p>
 <main id="feed"></main>
 <script>
-  const API = "https://api.github.com/repos/vinceallenvince/walk-and-hack/contents/transformed";
+  // ?theme=halloween shows one theme. PNGs directly in transformed/ predate
+  // themes and count as Christmas.
+  const REPO = "vinceallenvince/walk-and-hack";
+  const API = `https://api.github.com/repos/${REPO}/contents/transformed`;
+  const RAW = `https://raw.githubusercontent.com/${REPO}/main`;
+  const LEGACY_THEME = "christmas";
+  const only = new URLSearchParams(location.search).get("theme");
   const feed = document.getElementById("feed");
   const status = document.getElementById("status");
+  const isImg = f => f.type === "file" && /\.(png|jpe?g|webp)$/i.test(f.name);
 
-  fetch(API)
-    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(files => {
-      const imgs = files
-        .filter(f => /\.(png|jpe?g|webp)$/i.test(f.name))
-        .sort((a, b) => b.name.localeCompare(a.name)); // newest first
-      if (!imgs.length) { status.textContent = "No pigeons yet."; return; }
+  const list = url => fetch(url).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
+
+  list(API)
+    .then(root => {
+      const want = t => !only || only === t;
+      const legacy = want(LEGACY_THEME)
+        ? root.filter(isImg).map(f => ({ theme: LEGACY_THEME, f })) : [];
+      const dirs = root.filter(d => d.type === "dir" && want(d.name));
+      return Promise.all(dirs.map(d =>
+        list(d.url).then(files => files.filter(isImg).map(f => ({ theme: d.name, f })))
+      )).then(lists => legacy.concat(...lists));
+    })
+    .then(items => {
+      items.sort((a, b) => b.f.name.localeCompare(a.f.name) || a.theme.localeCompare(b.theme)); // newest first
+      if (!items.length) { status.textContent = "No pigeons yet."; return; }
       status.remove();
-      for (const f of imgs) {
+      for (const { theme, f } of items) {
+        const fig = document.createElement("figure");
         const img = document.createElement("img");
+        const cap = document.createElement("figcaption");
         img.src = f.download_url;
-        img.alt = f.name;
+        img.alt = `${theme} ${f.name}`;
         img.loading = "lazy";
-        feed.appendChild(img);
+        img.addEventListener("load", () => caption(cap, theme, f.name), { once: true });
+        fig.append(img, cap);
+        feed.appendChild(fig);
       }
     })
     .catch(e => { status.textContent = "Couldn't load images (" + e.message + "). Try again in a minute."; });
+
+  // Theme and slogan/caption from the classification JSON (raw URL, not the API).
+  function caption(cap, theme, name) {
+    const stem = name.replace(/\.[^.]+$/, "");
+    fetch(`${RAW}/classifications/${stem}.json`)
+      .then(r => r.ok ? r.json() : {})
+      .then(c => {
+        const d = (c.directions || {})[theme] || (theme === LEGACY_THEME && c.direction) || {};
+        const phrase = d[d.phrase || "slogan"];
+        cap.textContent = phrase ? `${theme} · “${phrase}”` : theme;
+      })
+      .catch(() => { cap.textContent = theme; });
+  }
 </script>
 </body>
 </html>

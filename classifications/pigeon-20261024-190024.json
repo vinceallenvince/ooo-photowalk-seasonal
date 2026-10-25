@@ -37,13 +37,15 @@
       }
     }
   },
-  "direction": {
-    "style": "warm",
-    "garment": "a chunky hand-knitted Christmas sweater with snowflake and tree patterns",
-    "accessories": [
-      "a striped knitted Christmas scarf",
-      "a Santa hat with white fur trim"
-    ],
-    "slogan": "Silent Flight, Holy Flight"
+  "directions": {
+    "christmas": {
+      "style": "warm",
+      "garment": "a chunky hand-knitted Christmas sweater with snowflake and tree patterns",
+      "accessories": [
+        "a striped knitted Christmas scarf",
+        "a Santa hat with white fur trim"
+      ],
+      "slogan": "Silent Flight, Holy Flight"
+    }
   }
 }
