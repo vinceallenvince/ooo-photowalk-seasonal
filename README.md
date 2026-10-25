@@ -15,7 +15,7 @@ Snap a pigeon on your iPhone. A minute later it's back on your phone, photoreali
 
 ## How it works
 
-1. **Post:** The **Post Pigeon** iOS Shortcut (share sheet → Post Pigeon) converts the photo to JPEG, resizes it, strips GPS, and commits it to `pigeons/` through the GitHub Contents API.
+1. **Post:** The **Post Pigeon** iOS Shortcut (share sheet → Post Pigeon) converts the photo to JPEG, resizes it, strips GPS, asks for a theme, and commits it to `pigeons/<theme>/` through the GitHub Contents API.
 2. **Classify:** The push triggers a GitHub Action. [Typesafe](https://docs.typesafe.ai/images) (Jev) answers three questions about the photo: is it a pigeon, where is it, and what is it doing.
 3. **Gate:** Not a pigeon? You get a "Pigeon not detected." push and the run stops, so nothing is spent on image generation.
 4. **Direct:** The script picks a theme (photo date, or the `THEME` repo variable), then the outfit from the setting and the slogan from the activity, using `themes/<theme>/direction.json`.
@@ -30,10 +30,10 @@ Snap a pigeon on your iPhone. A minute later it's back on your phone, photoreali
  │ "Post Pigeon"        │  JPEG · 1200px · no GPS
  │ (iOS Shortcut)       │
  └──────────┬───────────┘
-            │ PUT /repos/.../contents/pigeons/pigeon-<timestamp>.jpg
+            │ PUT /repos/.../contents/pigeons/<theme>/pigeon-<timestamp>.jpg
             ▼
  GitHub repo ─────────────────────────────────────────────────────────────
- │  pigeons/*.jpg ──push──▶ GitHub Action: .github/workflows/transform.yml
+ │  pigeons/**.jpg ─push──▶ GitHub Action: .github/workflows/transform.yml
  │                          scripts/transform.py
  │                               │
  │                               ▼
@@ -68,7 +68,7 @@ Snap a pigeon on your iPhone. A minute later it's back on your phone, photoreali
 
 | Path | What it is |
 |---|---|
-| `pigeons/` | Originals, posted by the Shortcut |
+| `pigeons/<theme>/` | Originals, posted by the Shortcut. Photos directly in `pigeons/` get a theme by date. |
 | `classifications/` | Jev's answers and the chosen direction per theme, one JSON per photo |
 | `transformed/<theme>/` | Dressed-up results (PNG). PNGs directly in `transformed/` predate themes and count as Christmas. |
 | `themes/<theme>/prompt.md` | Image prompt template with `{{PLACEHOLDERS}}` |
@@ -93,7 +93,7 @@ Repository secrets (Settings → Secrets and variables → Actions):
 
 On your phone, open **https://github.com/settings/personal-access-tokens/new** in Safari and create a fine-grained token:
 
-- **Expiration:** your call. Shorter is safer; when it expires, generate a new token and paste it into the `Authorization` header (action 7 below).
+- **Expiration:** your call. Shorter is safer; when it expires, generate a new token and paste it into the `Authorization` header (action 8 below).
 - **Repository access:** Only select repositories → `walk-and-hack`
 - **Permissions:** Repository permissions → **Contents → Read and write**
 
@@ -112,14 +112,17 @@ Then add these actions in order, using the search bar at the bottom. Text in **b
 | 3 | Resize Image | Resize **Converted Image** to width **1200**, height auto |
 | 4 | Base64 Encode | **Encode** **Resized Image** · Line Breaks: **None** |
 | 5 | Format Date | **Current Date** · Date Format: **Custom** · `yyyyMMdd-HHmmss` |
-| 6 | Text | `pigeons/pigeon-`**Formatted Date**`.jpg` |
-| 7 | Get Contents of URL | see below |
-| 8 | Get Dictionary Value | Get **Value** for `content` in **Contents of URL** |
-| 9 | Get Dictionary Value | Get **Value** for `download_url` in **Dictionary Value** |
-| 10 | Copy to Clipboard | **Dictionary Value** |
-| 11 | Show Notification | `🐦 Posted` |
+| 6 | Choose from Menu | Prompt `Theme` · items `halloween`, `christmas` · see below |
+| 7 | Text | `pigeons/`**Menu Result**`/pigeon-`**Formatted Date**`.jpg` |
+| 8 | Get Contents of URL | see below |
+| 9 | Get Dictionary Value | Get **Value** for `content` in **Contents of URL** |
+| 10 | Get Dictionary Value | Get **Value** for `download_url` in **Dictionary Value** |
+| 11 | Copy to Clipboard | **Dictionary Value** |
+| 12 | Show Notification | `🐦 Posted` |
 
-**Step 7, Get Contents of URL:**
+**Step 6, Choose from Menu:** inside each branch, add a **Text** action holding the item's name (`halloween` under **halloween**, `christmas` under **christmas**). **Menu Result** is the output of the branch's last action, so an empty branch gives an empty theme. Item names must match a folder in `themes/` exactly, lowercase. To add a theme, add a menu item and its Text action.
+
+**Step 8, Get Contents of URL:**
 
 - **URL:** `https://api.github.com/repos/vinceallenvince/walk-and-hack/contents/`**Text**
 - **Method:** `PUT`
@@ -133,14 +136,16 @@ Then add these actions in order, using the search bar at the bottom. Text in **b
 
 ### 3. Use it
 
-In Photos, tap **Share → Post Pigeon**. The raw image URL lands on your clipboard, and about a minute later a Bark push brings the dressed-up pigeon.
+In Photos, tap **Share → Post Pigeon**, then pick a theme. The raw image URL lands on your clipboard, and about a minute later a Bark push brings the dressed-up pigeon.
 
 ### Troubleshooting
 
-- **The file is 0 bytes:** step 4's input isn't **Resized Image**. A common slip is the pill landing in the Encode/Decode slot instead of the input slot. Delete the action, re-add it, then re-link `content` in step 7.
+- **The file is 0 bytes:** step 4's input isn't **Resized Image**. A common slip is the pill landing in the Encode/Decode slot instead of the input slot. Delete the action, re-add it, then re-link `content` in step 8.
 - **The filename shows `[Formatted Date]` or `[Text]` literally:** a variable was typed instead of inserted. Clear it and insert the pill.
 - **The filename is `pigeon-.jpg`:** step 5 has no date. Set it to **Current Date**.
-- **The first run worked, later runs fail:** a fixed filename collided with an existing file, because GitHub rejects a PUT to a path that already exists without that file's `sha`. Fix the date variable in step 6.
+- **The path is `pigeons//pigeon-….jpg`:** a menu branch in step 6 is empty. Add its Text action.
+- **Every run fails with `Unknown theme`:** a menu item doesn't match a folder in `themes/`. Fix the item, then move or delete the bad photo, since the run keeps retrying it.
+- **The first run worked, later runs fail:** a fixed filename collided with an existing file, because GitHub rejects a PUT to a path that already exists without that file's `sha`. Fix the date variable in step 7.
 - **401 or 404 from GitHub:** check the `Bearer ` prefix, the token's repo access, and that it hasn't expired.
 
 ## Tweaks
