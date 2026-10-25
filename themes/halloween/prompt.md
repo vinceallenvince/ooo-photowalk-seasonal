@@ -49,7 +49,7 @@ Dress the pigeon in {{COSTUME}}.
 
 * Render the costume as a real, slightly homemade miniature Halloween costume, with authentic material texture: visible seams and weave for fabric, felt, satin, or burlap; believable stiffness for hats, masks, and collars.
 * Fit the costume naturally around the pigeon's body, accommodating its wings and anatomy.
-* Keep the pigeon's head, eyes, beak, and distinctive natural features visible, even under a mask, hood, or sheet.
+* Keep the pigeon's head, eyes, beak, and distinctive natural features visible, even under a mask, hood, or sheet, unless the costume itself says it covers the face.
 * Do not add any text, lettering, tags, or labels to the costume.
 
 4. Props
