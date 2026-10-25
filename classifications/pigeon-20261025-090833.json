@@ -1,0 +1,40 @@
+{
+  "subject": "no_bird",
+  "setting": "indoors",
+  "activity": "perched",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "no_bird",
+      "confidence": 1.0,
+      "probabilities": {
+        "pigeon": 0.0,
+        "other_bird": 0.0,
+        "no_bird": 1.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "indoors",
+      "confidence": 1.0,
+      "probabilities": {
+        "indoors": 1.0,
+        "subway": 0.0,
+        "street": 0.0,
+        "park": 0.0,
+        "ledge": 0.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "perched",
+      "confidence": 0.93,
+      "probabilities": {
+        "eating": 0.01,
+        "walking": 0.01,
+        "perched": 0.95,
+        "flying": 0.03
+      }
+    }
+  }
+}
