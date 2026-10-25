@@ -108,9 +108,10 @@ def load_theme(name: str) -> dict:
         raise SystemExit(f"Theme {name}: no phrases")
     for key, st in styles.items():
         fills = set(st.get("pick", {})) | set(st.get("sample", {})) | {theme["phrase"]}
-        missing = {ph for ph in declared if ph.lower() not in fills}
-        if missing:
-            raise SystemExit(f"Theme {name}, style {key}: can't fill {sorted(missing)}")
+        for outfit in st.get("outfits") or [{}]:
+            missing = {ph for ph in declared if ph.lower() not in fills | set(outfit)}
+            if missing:
+                raise SystemExit(f"Theme {name}, style {key}: can't fill {sorted(missing)}")
     _themes[name] = theme
     return theme
 
@@ -221,6 +222,13 @@ def pick_direction(theme: dict, stem: str, setting, activity) -> dict:
         next(k for k, st in styles.items() if st.get("default")),
     )
     d = {"style": style}
+    # An outfit bundles fields: a string is used as is, a list is sampled
+    # (`counts` sets how many, default 1).
+    if styles[style].get("outfits"):
+        outfit = rng.choice(styles[style]["outfits"])
+        counts = styles[style].get("counts", {})
+        for key, value in sorted(outfit.items()):
+            d[key] = value if isinstance(value, str) else rng.sample(value, counts.get(key, 1))
     for key, options in sorted(styles[style].get("pick", {}).items()):
         d[key] = rng.choice(options)
     for key, spec in sorted(styles[style].get("sample", {}).items()):
