@@ -1,0 +1,51 @@
+{
+  "subject": "pigeon",
+  "setting": "street",
+  "activity": "eating",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 1.0,
+      "probabilities": {
+        "pigeon": 1.0,
+        "other_bird": 0.0,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "street",
+      "confidence": 0.74,
+      "probabilities": {
+        "indoors": 0.0,
+        "subway": 0.0,
+        "street": 0.79,
+        "park": 0.21,
+        "ledge": 0.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "eating",
+      "confidence": 0.57,
+      "probabilities": {
+        "eating": 0.68,
+        "walking": 0.3,
+        "perched": 0.02,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "halloween": {
+      "style": "ground",
+      "costume": "a plague doctor costume: a small black wide-brimmed hat, a long black waxed-canvas cloak, and a white leather beaked plague mask strapped to the top of its head, the mask's long curved beak jutting out above the pigeon's own",
+      "props": [
+        "a tiny wooden walking cane tucked under one wing"
+      ],
+      "caption": "Bird of Prey-tend",
+      "phrase": "caption"
+    }
+  }
+}
