@@ -11,7 +11,7 @@ on:
         required: false
         default: ""
       renderers:
-        description: "Renderers, comma-separated: openai, flux (blank = repo RENDERERS variable, else openai,flux)"
+        description: "Renderers, comma-separated: openai, flux (blank = repo RENDERERS variable, else openai)"
         required: false
         default: ""
 
@@ -39,7 +39,7 @@ jobs:
         id: transform
         env:
           THEME: ${{ inputs.theme || vars.THEME }}
-          RENDERERS: ${{ inputs.renderers || vars.RENDERERS || 'openai,flux' }}
+          RENDERERS: ${{ inputs.renderers || vars.RENDERERS || 'openai' }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
           BARK_KEY: ${{ secrets.BARK_KEY }}
