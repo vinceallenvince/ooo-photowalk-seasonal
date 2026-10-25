@@ -4,61 +4,6 @@
   "season": ["10-01", "10-31"],
   "placeholders": ["COSTUME", "PROPS"],
   "styles": {
-    "subway": {
-      "when_setting": ["subway"],
-      "pick": {
-        "costume": [
-          "a small white bedsheet ghost costume with two cut-out eye holes, draped over its back with the head poking through",
-          "a Phantom of the Opera costume: a white porcelain half mask and a black opera cape with a red satin lining"
-        ]
-      },
-      "sample": {
-        "props": {
-          "from": [
-            "a tiny orange jack-o'-lantern candy pail hooked over one wing",
-            "a miniature black top hat"
-          ],
-          "count": 1
-        }
-      }
-    },
-    "street": {
-      "default": true,
-      "when_setting": ["street"],
-      "pick": {
-        "costume": [
-          "a witch costume: a tall pointed black witch hat and a tattered black cape",
-          "a pirate costume: a black tricorn hat with gold trim and a small striped sash"
-        ]
-      },
-      "sample": {
-        "props": {
-          "from": [
-            "a tiny orange jack-o'-lantern candy pail hooked over one wing",
-            "a miniature eye patch",
-            "a small purple satin bow at the neck"
-          ],
-          "count": 1
-        }
-      }
-    },
-    "park": {
-      "when_setting": ["park"],
-      "pick": {
-        "costume": [
-          "a scarecrow costume: a frayed straw hat and a patched burlap vest with straw poking out of the seams"
-        ]
-      },
-      "sample": {
-        "props": {
-          "from": [
-            "a red plaid bandana knotted at the neck",
-            "a tiny orange jack-o'-lantern candy pail hooked over one wing"
-          ],
-          "count": 1
-        }
-      }
-    },
     "ledge": {
       "when_setting": ["ledge"],
       "pick": {
@@ -77,10 +22,15 @@
         }
       }
     },
-    "indoors": {
-      "when_setting": ["indoors"],
+    "ground": {
+      "default": true,
       "pick": {
         "costume": [
+          "a small white bedsheet ghost costume with two cut-out eye holes, draped over its back with the head poking through",
+          "a Phantom of the Opera costume: a white porcelain half mask and a black opera cape with a red satin lining",
+          "a witch costume: a tall pointed black witch hat and a tattered black cape",
+          "a pirate costume: a black tricorn hat with gold trim and a small striped sash",
+          "a scarecrow costume: a frayed straw hat and a patched burlap vest with straw poking out of the seams",
           "a round orange pumpkin costume with a green stem cap",
           "a black skeleton onesie with white printed bones"
         ]
@@ -89,6 +39,10 @@
         "props": {
           "from": [
             "a tiny orange jack-o'-lantern candy pail hooked over one wing",
+            "a miniature black top hat",
+            "a miniature eye patch",
+            "a small purple satin bow at the neck",
+            "a red plaid bandana knotted at the neck",
             "a small black-and-orange striped scarf"
           ],
           "count": 1
