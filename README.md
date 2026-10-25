@@ -109,7 +109,7 @@ Add these actions in order, using the search bar at the bottom. Text in **bold**
 
 | # | Action | Settings | |
 |---|---|---|---|
-| 1 | *Receive* (auto-added) | Receive **Images** from Share Sheet · If there's no input: **Ask For** | [📷](docs/shortcut/steps-01-05.png) |
+| 1 | *Receive* (auto-added) | Receive **Apps and Images** from **Share Sheet** · If there's no input: **Ask For** **Photos** | [📷](docs/shortcut/steps-01-05.png) |
 | 2 | Convert Image | Convert **Shortcut Input** to **JPEG** · Quality ~0.7 · **Preserve Metadata: off** (strips GPS) | [📷](docs/shortcut/steps-01-05.png) |
 | 3 | Resize Image | Resize **Converted Image** to width **1200**, height auto | [📷](docs/shortcut/steps-01-05.png) |
 | 4 | Base64 Encode | **Encode** **Resized Image** · Line Breaks: **None** | [📷](docs/shortcut/steps-01-05.png) |
