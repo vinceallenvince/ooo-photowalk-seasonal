@@ -86,6 +86,7 @@ Repository secrets (Settings → Secrets and variables → Actions):
 | `OPENAI_API_KEY` | Image edit |
 | `TYPESAFE_API_KEY` | Classification |
 | `BARK_KEY` | Push notifications (the device key only, not the URL) |
+| `REPLICATE_API_KEY` | FLUX renders on Replicate |
 
 ## iOS Shortcut setup
 
@@ -159,4 +160,5 @@ In Photos, tap **Share → Post Pigeon**, then pick a theme. The raw image URL l
 - **Regenerate a pigeon:** delete its PNG in `transformed/<theme>/` and run the workflow (Actions → Run workflow).
 - **Force a rejected photo through:** delete its JSON in `classifications/` and run the workflow.
 - **Gallery filter:** add `?theme=halloween` to the gallery URL.
-- **Cost guard:** each run handles only the newest unprocessed photo (`MAX_PER_RUN = 1`).
+- **Compare renderers:** `RENDERERS` picks who renders, from `openai` and `flux` (FLUX.2 [flex] on Replicate). Both get the same prompt; FLUX writes `<name>--flux.png` next to the OpenAI image, and each sends its own push. Default `openai,flux`; set the repo variable `RENDERERS` (e.g. `openai`) or use the Run workflow box to change it.
+- **Cost guard:** each run handles only the newest unprocessed photo (`MAX_PER_RUN = 1`), with one render per renderer.

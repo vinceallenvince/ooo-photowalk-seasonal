@@ -5,16 +5,18 @@ Stage 1 (Typesafe / Jev): one request, three Choice questions about
 Stage 2 (script): pick the theme's direction (style from the setting, phrase
     from the activity) using themes/<theme>/direction.json. Saved with the
     classification in classifications/<name>.json under directions.<theme>.
-Stage 3 (OpenAI): only if the subject is a pigeon, fill
-    themes/<theme>/prompt.md and edit the photo into
-    transformed/<theme>/<name>.png.
+Stage 3 (renderers): only if the subject is a pigeon, fill
+    themes/<theme>/prompt.md and edit the photo with each renderer in
+    RENDERERS (default "openai"): OpenAI writes transformed/<theme>/<name>.png,
+    FLUX on Replicate writes transformed/<theme>/<name>--flux.png. Same prompt,
+    so the two can be compared side by side.
 
 Theme, highest precedence first: the photo's subfolder
 (pigeons/<theme>/pigeon-*.jpg), the THEME env var, the theme whose "season"
 covers the photo's date, then DEFAULT_THEME.
 
-Idempotent: a photo is done for a theme once it has that theme's transform,
-or once it has been classified as not-a-pigeon. Anything else is retried.
+Idempotent: a photo is done for a theme once every renderer's output exists,
+or once it has been classified as not-a-pigeon. Only missing outputs render.
 """
 
 import base64
@@ -25,6 +27,7 @@ import pathlib
 import random
 import re
 import sys
+import time
 import uuid
 
 import requests
@@ -38,7 +41,15 @@ CLS = pathlib.Path("classifications")
 THEMES = pathlib.Path("themes")
 DEFAULT_THEME = "christmas"
 LEGACY_THEME = "christmas"  # PNGs directly in transformed/ predate themes
-MAX_PER_RUN = 1  # cost guard: newest photo only
+MAX_PER_RUN = 1  # cost guard: newest photo only (one render per renderer)
+RENDERERS = [r.strip() for r in os.environ.get("RENDERERS", "openai").split(",") if r.strip()]
+SUFFIX = {"openai": "", "flux": "--flux"}  # output filename suffix per renderer
+if not RENDERERS or set(RENDERERS) - set(SUFFIX):
+    raise SystemExit(f"RENDERERS must be a list of {sorted(SUFFIX)}, got {RENDERERS}")
+
+REPLICATE_KEY = os.environ.get("REPLICATE_API_KEY")
+FLUX_MODEL = os.environ.get("FLUX_MODEL", "black-forest-labs/flux-2-flex")
+RAW = "https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main"
 
 TYPESAFE_URL = "https://api.typesafe.ai/v1/systemone"
 TYPESAFE_KEY = os.environ.get("TYPESAFE_API_KEY")
@@ -135,8 +146,14 @@ def choose_theme(p: pathlib.Path) -> str:
     return DEFAULT_THEME
 
 
-def output_path(stem: str, theme: str) -> pathlib.Path:
-    return OUT / theme / f"{stem}.png"
+def output_path(stem: str, theme: str, renderer: str = "openai") -> pathlib.Path:
+    return OUT / theme / f"{stem}{SUFFIX[renderer]}.png"
+
+
+def has_output(stem: str, theme: str, renderer: str) -> bool:
+    if output_path(stem, theme, renderer).exists():
+        return True
+    return renderer == "openai" and theme == LEGACY_THEME and (OUT / f"{stem}.png").exists()
 
 
 def read_classification(cls_file: pathlib.Path) -> dict:
@@ -148,9 +165,7 @@ def read_classification(cls_file: pathlib.Path) -> dict:
 
 
 def is_done(p: pathlib.Path, theme: str) -> bool:
-    if output_path(p.stem, theme).exists():
-        return True
-    if theme == LEGACY_THEME and (OUT / f"{p.stem}.png").exists():
+    if all(has_output(p.stem, theme, r) for r in RENDERERS):
         return True
     cls_file = CLS / f"{p.stem}.json"
     if cls_file.exists():
@@ -252,6 +267,50 @@ def build_prompt(theme: dict, d: dict) -> str:
     return prompt
 
 
+def render_openai(src: pathlib.Path, prompt: str) -> bytes:
+    with open(src, "rb") as f:
+        out = openai_client.images.edit(model=MODEL, image=f, prompt=prompt)
+    return base64.b64decode(out.data[0].b64_json)
+
+
+def render_flux(src: pathlib.Path, prompt: str) -> bytes:
+    """Run FLUX_MODEL on Replicate with the photo's raw GitHub URL as input."""
+    if not REPLICATE_KEY:
+        raise RuntimeError("REPLICATE_API_KEY is not set")
+    auth = {"Authorization": f"Bearer {REPLICATE_KEY}"}
+    r = requests.post(
+        f"https://api.replicate.com/v1/models/{FLUX_MODEL}/predictions",
+        json={"input": {
+            "prompt": prompt,
+            "input_images": [f"{RAW}/{src.as_posix()}"],
+            "aspect_ratio": "match_input_image",
+        }},
+        headers={**auth, "Prefer": "wait=60"},
+        timeout=90,
+    )
+    if not r.ok:
+        raise RuntimeError(f"Replicate {r.status_code}: {r.text[:500]}")
+    pred = r.json()
+    poll = pred["urls"]["get"]
+    deadline = time.time() + 300
+    while pred["status"] not in ("succeeded", "failed", "canceled"):
+        if time.time() > deadline:
+            raise TimeoutError(f"Replicate prediction {pred.get('id')} still {pred['status']}")
+        time.sleep(3)
+        pred = requests.get(poll, headers=auth, timeout=30).json()
+    if pred["status"] != "succeeded":
+        raise RuntimeError(f"Replicate {pred['status']}: {pred.get('error')}")
+    out = pred["output"]
+    img = requests.get(out[0] if isinstance(out, list) else out, timeout=60)
+    img.raise_for_status()
+    buf = io.BytesIO()
+    Image.open(io.BytesIO(img.content)).save(buf, format="PNG")
+    return buf.getvalue()
+
+
+RENDER = {"openai": render_openai, "flux": render_flux}
+
+
 def set_output(**values) -> None:
     """Hand results to later workflow steps."""
     path = os.environ.get("GITHUB_OUTPUT")
@@ -338,16 +397,26 @@ for src, theme_name in todo:
         cls_file.write_text(json.dumps(result, indent=2))
         print(f"   direction: {json.dumps(direction)}")
 
-        # Stage 3: transform
+        # Stage 3: render with each renderer that hasn't produced output yet
         prompt = build_prompt(theme, direction)
-        with open(src, "rb") as f:
-            out = openai_client.images.edit(model=MODEL, image=f, prompt=prompt)
-        dest = output_path(src.stem, theme_name)
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_bytes(base64.b64decode(out.data[0].b64_json))
-        print(f"   ok: {dest}")
-        set_output(theme=theme_name, title=theme["title"],
-                   phrase=direction[direction["phrase"]], path=dest)
+        made, errors = [], 0
+        for renderer in RENDERERS:
+            if has_output(src.stem, theme_name, renderer):
+                continue
+            try:
+                dest = output_path(src.stem, theme_name, renderer)
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                dest.write_bytes(RENDER[renderer](src, prompt))
+                print(f"   ok ({renderer}): {dest}")
+                made.append(dest.as_posix())
+            except Exception as e:
+                errors += 1
+                print(f"   {renderer} failed: {type(e).__name__}: {e}")
+        if made:
+            set_output(theme=theme_name, title=theme["title"],
+                       phrase=direction[direction["phrase"]], paths=" ".join(made))
+        elif errors:
+            raise RuntimeError("every renderer failed")
     except Exception as e:
         failed += 1
         print(f"   failed: {type(e).__name__}: {e}")
