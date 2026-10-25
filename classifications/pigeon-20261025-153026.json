@@ -1,0 +1,51 @@
+{
+  "subject": "pigeon",
+  "setting": "street",
+  "activity": "walking",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 1.0,
+      "probabilities": {
+        "pigeon": 1.0,
+        "other_bird": 0.0,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "street",
+      "confidence": 0.9,
+      "probabilities": {
+        "indoors": 0.0,
+        "subway": 0.0,
+        "street": 0.92,
+        "park": 0.08,
+        "ledge": 0.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "walking",
+      "confidence": 0.65,
+      "probabilities": {
+        "eating": 0.01,
+        "walking": 0.74,
+        "perched": 0.25,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "halloween": {
+      "style": "ground",
+      "costume": "a Phantom of the Opera costume: a white porcelain half mask and a black opera cape with a red satin lining",
+      "props": [
+        "a tiny orange jack-o'-lantern candy pail hooked over one wing"
+      ],
+      "caption": "The Coo-ning",
+      "phrase": "caption"
+    }
+  }
+}
