@@ -1,0 +1,51 @@
+{
+  "subject": "pigeon",
+  "setting": "street",
+  "activity": "walking",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 1.0,
+      "probabilities": {
+        "pigeon": 1.0,
+        "other_bird": 0.0,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "street",
+      "confidence": 0.99,
+      "probabilities": {
+        "indoors": 0.01,
+        "subway": 0.0,
+        "street": 0.99,
+        "park": 0.0,
+        "ledge": 0.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "walking",
+      "confidence": 0.95,
+      "probabilities": {
+        "eating": 0.01,
+        "walking": 0.96,
+        "perched": 0.03,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "halloween": {
+      "style": "ground",
+      "costume": "a scarecrow costume: a frayed straw hat and a patched burlap vest with straw poking out of the seams",
+      "props": [
+        "a miniature eye patch"
+      ],
+      "caption": "Coo-dini",
+      "phrase": "caption"
+    }
+  }
+}
