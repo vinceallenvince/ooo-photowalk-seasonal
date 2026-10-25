@@ -4,7 +4,7 @@ Objective
 
 Transform the provided photograph of a pigeon into a humorous, photorealistic Halloween portrait.
 
-Dress the pigeon in {{COSTUME}}, complemented by {{PROPS}}, with a small tag reading "{{CAPTION}}".
+Dress the pigeon in {{COSTUME}}, complemented by {{PROPS}}.
 
 The central creative principle is understated visual absurdity: an ordinary pigeon, in an ordinary environment, inexplicably dressed for Halloween.
 
@@ -19,6 +19,7 @@ Treat the uploaded photograph as the source of truth. Modify only what is necess
 * Preserve the pigeon's distinctive appearance, including feather colors, patterns, eyes, beak, proportions, and anatomy.
 * Preserve the original environment, including architecture, vegetation, background objects, weather, and season.
 * Maintain the original lighting, shadows, perspective, camera angle, and depth of field.
+* Match the original color mode and grade. If the photograph is black-and-white, sepia, or heavily color-graded, render every added item in that same mode. A black-and-white photo stays entirely black-and-white.
 * Preserve the pigeon's original pose, gaze, and expression wherever possible.
 * Do not relocate the pigeon or introduce a new background.
 * Do not add pumpkins, cobwebs, fog, Halloween decorations, or other environmental elements that were not present in the original photograph.
@@ -47,9 +48,7 @@ Dress the pigeon in {{COSTUME}}.
 * Render the costume as a real, slightly homemade miniature Halloween costume, with authentic material texture: visible seams and weave for fabric, felt, satin, or burlap; believable stiffness for hats, masks, and collars.
 * Fit the costume naturally around the pigeon's body, accommodating its wings and anatomy.
 * Keep the pigeon's head, eyes, beak, and distinctive natural features visible, even under a mask, hood, or sheet.
-* Attach a small paper or card tag to the costume, like a costume label or name tag, reading "{{CAPTION}}".
-* Render the caption exactly as written, with correct spelling and legible handwritten or printed lettering.
-* Keep the tag small and secondary to the costume.
+* Do not add any text, lettering, tags, or labels to the costume.
 
 4. Props
 
@@ -63,7 +62,7 @@ Add exactly these props: {{PROPS}}. Do not add others.
 
 The transformed image must be convincingly photorealistic.
 
-* Match the original photograph's lighting, exposure, shadows, and color temperature.
+* Match the original photograph's lighting, exposure, shadows, color temperature, and color mode. Added items take on the photo's color treatment, including black-and-white, sepia, or film grading, along with its grain and contrast.
 * Preserve realistic feather textures and iridescence.
 * Render costume materials with detailed stitching, natural folds, and believable contact with the bird.
 * Ensure the costume follows the pigeon's anatomy.
@@ -94,9 +93,9 @@ Requirements:
 * Preserve the original environment and photographic composition as closely as possible.
 * Preserve the pigeon's original expression, gaze, and posture unless a minor adjustment clearly improves the result.
 * Dress the pigeon in {{COSTUME}}.
-* Show the caption "{{CAPTION}}" on a small tag, clearly legible and spelled exactly.
+* Match the original photograph's color mode: in a black-and-white photo, the costume is black-and-white too.
 * Add {{PROPS}}, and nothing else.
 * Maintain believable anatomy, material textures, lighting, and shadows.
-* Do not introduce unrelated objects, environmental changes, overlaid captions, watermarks, or borders.
+* Do not introduce unrelated objects, environmental changes, text, captions, tags, watermarks, or borders.
 
 Success criterion: The result should feel like the original photograph, with the smallest possible set of changes needed to make the pigeon look absurdly ready for Halloween. The humor should emerge naturally from that contrast.

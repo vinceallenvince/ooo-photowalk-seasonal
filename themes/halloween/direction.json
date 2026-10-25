@@ -2,7 +2,7 @@
   "name": "halloween",
   "title": "New Halloween pigeon 🎃",
   "season": ["10-01", "10-31"],
-  "placeholders": ["COSTUME", "PROPS", "CAPTION"],
+  "placeholders": ["COSTUME", "PROPS"],
   "styles": {
     "subway": {
       "when_setting": ["subway"],

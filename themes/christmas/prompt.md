@@ -19,6 +19,7 @@ Treat the uploaded photograph as the source of truth. Modify only what is necess
 * Preserve the pigeon's distinctive appearance, including feather colors, patterns, eyes, beak, proportions, and anatomy.
 * Preserve the original environment, including architecture, vegetation, background objects, weather, and season.
 * Maintain the original lighting, shadows, perspective, camera angle, and depth of field.
+* Match the original color mode and grade. If the photograph is black-and-white, sepia, or heavily color-graded, render every added item in that same mode. A black-and-white photo stays entirely black-and-white.
 * Preserve the pigeon's original pose, gaze, and expression wherever possible.
 * Do not relocate the pigeon or introduce a new background.
 * Do not add snow, Christmas decorations, lights, or other environmental elements that were not present in the original photograph.
@@ -46,8 +47,10 @@ Dress the pigeon in {{GARMENT}}.
 
 * Render the garment with authentic fabric texture appropriate to its material: visible stitches and ribbing for knits, natural weave and drape for cotton or velvet.
 * Incorporate traditional Christmas motifs such as snowflakes, Christmas trees, holly, candy canes, or miniature birds.
-* Display the slogan "{{SLOGAN}}" prominently on the garment, integrated into the fabric (knitted in or printed) rather than overlaid as digital text.
-* Render the slogan exactly as written, with correct spelling and legible lettering.
+* Knit or print the slogan "{{SLOGAN}}" into the garment where a real pet sweater would carry it, integrated into the fabric rather than overlaid as digital text.
+* The lettering must follow the garment: wrap around the body's curves, sit in the knit or print, foreshorten with the camera angle, and be partly hidden by folds, wings, or the pigeon's pose where that would naturally happen.
+* Do not flatten, enlarge, or turn the lettering toward the camera to make it readable. Realism takes priority over legibility.
+* Spell the slogan exactly as written wherever it is visible.
 * Fit the garment naturally around the pigeon's body, accommodating its wings and anatomy.
 * Keep the pigeon's head and distinctive natural features visible.
 
@@ -62,7 +65,7 @@ Add exactly these accessories: {{ACCESSORIES}}. Do not add others.
 
 The transformed image must be convincingly photorealistic.
 
-* Match the original photograph's lighting, exposure, shadows, and color temperature.
+* Match the original photograph's lighting, exposure, shadows, color temperature, and color mode. Added items take on the photo's color treatment, including black-and-white, sepia, or film grading, along with its grain and contrast.
 * Preserve realistic feather textures and iridescence.
 * Render fabric with detailed stitching, natural folds, and believable contact with the bird.
 * Ensure clothing follows the pigeon's anatomy.
@@ -93,9 +96,10 @@ Requirements:
 * Preserve the original environment and photographic composition as closely as possible.
 * Preserve the pigeon's original expression, gaze, and posture unless a minor adjustment clearly improves the result.
 * Dress the pigeon in {{GARMENT}}.
-* Show the slogan "{{SLOGAN}}", clearly legible and spelled exactly.
+* Show the slogan "{{SLOGAN}}" on the garment, spelled exactly, placed and angled as it would be on a real sweater, even if that makes it partly hidden.
 * Add {{ACCESSORIES}}, and nothing else.
 * Maintain believable anatomy, fabric textures, lighting, and shadows.
+* Match the original photograph's color mode: in a black-and-white photo, the outfit is black-and-white too.
 * Do not introduce unrelated objects, environmental changes, captions, watermarks, or borders.
 
 Success criterion: The result should feel like the original photograph, with the smallest possible set of changes needed to make the pigeon look absurdly festive. The humor should emerge naturally from that contrast.
