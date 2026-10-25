@@ -1,0 +1,51 @@
+{
+  "subject": "pigeon",
+  "setting": "street",
+  "activity": "walking",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 1.0,
+      "probabilities": {
+        "pigeon": 1.0,
+        "other_bird": 0.0,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "street",
+      "confidence": 1.0,
+      "probabilities": {
+        "indoors": 0.0,
+        "subway": 0.0,
+        "street": 1.0,
+        "park": 0.0,
+        "ledge": 0.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "walking",
+      "confidence": 0.89,
+      "probabilities": {
+        "eating": 0.01,
+        "walking": 0.92,
+        "perched": 0.07,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "halloween": {
+      "style": "ground",
+      "costume": "a pirate costume: a black tricorn hat with gold trim and a small striped sash",
+      "props": [
+        "a miniature eye patch"
+      ],
+      "caption": "Coo-dini",
+      "phrase": "caption"
+    }
+  }
+}
