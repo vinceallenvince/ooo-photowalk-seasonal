@@ -1,0 +1,51 @@
+{
+  "subject": "pigeon",
+  "setting": "street",
+  "activity": "eating",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 1.0,
+      "probabilities": {
+        "pigeon": 1.0,
+        "other_bird": 0.0,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "street",
+      "confidence": 0.69,
+      "probabilities": {
+        "indoors": 0.0,
+        "subway": 0.0,
+        "street": 0.75,
+        "park": 0.25,
+        "ledge": 0.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "eating",
+      "confidence": 0.56,
+      "probabilities": {
+        "eating": 0.67,
+        "walking": 0.31,
+        "perched": 0.02,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "halloween": {
+      "style": "ground",
+      "costume": "a witch costume: a tall pointed black witch hat and a tattered black cape",
+      "props": [
+        "a small purple satin bow at the neck"
+      ],
+      "caption": "Trick or Tweet",
+      "phrase": "caption"
+    }
+  }
+}
