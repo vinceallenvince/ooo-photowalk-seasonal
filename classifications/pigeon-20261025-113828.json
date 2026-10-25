@@ -1,0 +1,51 @@
+{
+  "subject": "pigeon",
+  "setting": "street",
+  "activity": "eating",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 0.98,
+      "probabilities": {
+        "pigeon": 0.99,
+        "other_bird": 0.01,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "street",
+      "confidence": 0.87,
+      "probabilities": {
+        "indoors": 0.03,
+        "subway": 0.0,
+        "street": 0.9,
+        "park": 0.01,
+        "ledge": 0.06
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "eating",
+      "confidence": 0.49,
+      "probabilities": {
+        "eating": 0.62,
+        "walking": 0.32,
+        "perched": 0.06,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "halloween": {
+      "style": "ground",
+      "costume": "a black skeleton onesie with white printed bones",
+      "props": [
+        "a tiny orange jack-o'-lantern candy pail hooked over one wing"
+      ],
+      "caption": "Bird of Prey-tend",
+      "phrase": "caption"
+    }
+  }
+}
