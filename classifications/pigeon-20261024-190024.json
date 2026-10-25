@@ -46,6 +46,15 @@
         "a Santa hat with white fur trim"
       ],
       "slogan": "Silent Flight, Holy Flight"
+    },
+    "halloween": {
+      "style": "ledge",
+      "costume": "a gargoyle costume: a stone-gray hood with two small stubby horns and little bat wings",
+      "props": [
+        "a tiny orange jack-o'-lantern candy pail hooked over one wing"
+      ],
+      "caption": "Feather Frightening",
+      "phrase": "caption"
     }
   }
 }
