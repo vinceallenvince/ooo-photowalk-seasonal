@@ -1,0 +1,51 @@
+{
+  "subject": "pigeon",
+  "setting": "park",
+  "activity": "perched",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 1.0,
+      "probabilities": {
+        "pigeon": 1.0,
+        "other_bird": 0.0,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "park",
+      "confidence": 1.0,
+      "probabilities": {
+        "indoors": 0.0,
+        "subway": 0.0,
+        "street": 0.0,
+        "park": 1.0,
+        "ledge": 0.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "perched",
+      "confidence": 1.0,
+      "probabilities": {
+        "eating": 0.0,
+        "walking": 0.0,
+        "perched": 1.0,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "halloween": {
+      "style": "park",
+      "costume": "a scarecrow costume: a frayed straw hat and a patched burlap vest with straw poking out of the seams",
+      "props": [
+        "a tiny orange jack-o'-lantern candy pail hooked over one wing"
+      ],
+      "caption": "Feather Frightening",
+      "phrase": "caption"
+    }
+  }
+}
