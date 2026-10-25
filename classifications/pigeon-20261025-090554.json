@@ -46,6 +46,16 @@
       ],
       "caption": "Feather Frightening",
       "phrase": "caption"
+    },
+    "christmas": {
+      "style": "warm",
+      "garment": "a red-and-green Fair Isle knitted Christmas sweater",
+      "accessories": [
+        "a Santa hat with white fur trim",
+        "a striped knitted Christmas scarf"
+      ],
+      "slogan": "Merry Birdmas",
+      "phrase": "slogan"
     }
   }
 }
