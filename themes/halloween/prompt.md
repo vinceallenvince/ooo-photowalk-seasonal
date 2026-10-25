@@ -6,6 +6,8 @@ Transform the provided photograph of a pigeon into a humorous, photorealistic Ha
 
 Dress the pigeon in {{COSTUME}}, complemented by {{PROPS}}.
 
+If the photograph shows more than one pigeon, dress every clearly visible pigeon. The most prominent pigeon wears {{COSTUME}} with {{PROPS}}. Each other pigeon wears its own different, simple homemade Halloween costume, so no two match. Every rule below applies to each pigeon.
+
 The central creative principle is understated visual absurdity: an ordinary pigeon, in an ordinary environment, inexplicably dressed for Halloween.
 
 The result should look like an authentic photograph rather than a staged or digitally fabricated scene.
@@ -52,7 +54,7 @@ Dress the pigeon in {{COSTUME}}.
 
 4. Props
 
-Add exactly these props: {{PROPS}}. Do not add others.
+Add exactly these props to the most prominent pigeon: {{PROPS}}. Do not add others. Other pigeons in a group may wear one small prop that suits their own costume.
 
 * Props should look like real miniature costume pieces, worn by or attached to the bird.
 * Props must stay on the pigeon. Do not place them in the scene around it.
@@ -93,6 +95,7 @@ Requirements:
 * Preserve the original environment and photographic composition as closely as possible.
 * Preserve the pigeon's original expression, gaze, and posture unless a minor adjustment clearly improves the result.
 * Dress the pigeon in {{COSTUME}}.
+* In a group, dress every clearly visible pigeon, each in a different costume.
 * Match the original photograph's color mode: in a black-and-white photo, the costume is black-and-white too.
 * Add {{PROPS}}, and nothing else.
 * Maintain believable anatomy, material textures, lighting, and shadows.
