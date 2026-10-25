@@ -10,6 +10,10 @@ on:
         description: "Theme to use (blank = repo THEME variable, else by date)"
         required: false
         default: ""
+      renderers:
+        description: "Renderers, comma-separated: openai, flux (blank = repo RENDERERS variable, else openai,flux)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -35,10 +39,13 @@ jobs:
         id: transform
         env:
           THEME: ${{ inputs.theme || vars.THEME }}
+          RENDERERS: ${{ inputs.renderers || vars.RENDERERS || 'openai,flux' }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
           BARK_KEY: ${{ secrets.BARK_KEY }}
           IMAGE_MODEL: gpt-image-2.5-sunburst
+          REPLICATE_API_KEY: ${{ secrets.REPLICATE_API_KEY }}
+          FLUX_MODEL: black-forest-labs/flux-2-flex
         run: python scripts/transform.py
 
       - name: Commit results and notify
@@ -47,7 +54,7 @@ jobs:
           THEME_NAME: ${{ steps.transform.outputs.theme }}
           TITLE: ${{ steps.transform.outputs.title }}
           PHRASE: ${{ steps.transform.outputs.phrase }}
-          OUT_PATH: ${{ steps.transform.outputs.path }}
+          OUT_PATHS: ${{ steps.transform.outputs.paths }}
         run: |
           git config user.name "pigeon-bot"
           git config user.email "pigeon-bot@users.noreply.github.com"
@@ -60,13 +67,15 @@ jobs:
           git pull --rebase
           git push
 
-          if [ -n "$BARK_KEY" ] && [ -n "$OUT_PATH" ]; then
-            body="Tap to see it"
-            [ -n "$PHRASE" ] && body="“$PHRASE” · Tap to see it"
+          [ -n "$BARK_KEY" ] || exit 0
+          body="Tap to see it"
+          [ -n "$PHRASE" ] && body="“$PHRASE” · Tap to see it"
+          for out in $OUT_PATHS; do
+            case "$out" in *--flux.png) label="FLUX" ;; *) label="OpenAI" ;; esac
             curl -s -X POST "https://api.day.app/$BARK_KEY" \
-              --data-urlencode "title=$TITLE" \
+              --data-urlencode "title=$TITLE · $label" \
               --data-urlencode "body=$body" \
-              --data-urlencode "url=https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main/$OUT_PATH" \
+              --data-urlencode "url=https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main/$out" \
               --data-urlencode "group=pigeons" \
               --data-urlencode "level=timeSensitive" > /dev/null
-          fi
+          done

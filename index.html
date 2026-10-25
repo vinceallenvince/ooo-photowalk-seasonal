@@ -62,16 +62,19 @@
     .catch(e => { status.textContent = "Couldn't load images (" + e.message + "). Try again in a minute."; });
 
   // Theme and slogan/caption from the classification JSON (raw URL, not the API).
+  // A "--flux" suffix marks the FLUX render of the same photo.
   function caption(cap, theme, name) {
-    const stem = name.replace(/\.[^.]+$/, "");
+    const base = name.replace(/\.[^.]+$/, "");
+    const stem = base.replace(/--\w+$/, "");
+    const label = base === stem ? theme : `${theme} · FLUX`;
     fetch(`${RAW}/classifications/${stem}.json`)
       .then(r => r.ok ? r.json() : {})
       .then(c => {
         const d = (c.directions || {})[theme] || (theme === LEGACY_THEME && c.direction) || {};
         const phrase = d[d.phrase || "slogan"];
-        cap.textContent = phrase ? `${theme} · “${phrase}”` : theme;
+        cap.textContent = phrase ? `${label} · “${phrase}”` : label;
       })
-      .catch(() => { cap.textContent = theme; });
+      .catch(() => { cap.textContent = label; });
   }
 </script>
 </body>

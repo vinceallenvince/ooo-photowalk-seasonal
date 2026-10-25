@@ -25,11 +25,13 @@ The workflow then commits, pushes, and sends the success push through Bark, usin
 - **No creative content in Python.** Outfits, slogans, and costumes live in `themes/`. Adding a theme means adding a folder.
 - **Legacy PNGs:** files directly in `transformed/` predate themes and count as Christmas. They stay put so old notification links and the README keep working.
 - **Secrets:**
-  - `OPENAI_API_KEY`, `TYPESAFE_API_KEY`, and `BARK_KEY` are used.
+  - `OPENAI_API_KEY`, `TYPESAFE_API_KEY`, `BARK_KEY`, and `REPLICATE_API_KEY` are used.
   - `NTFY_TOPIC` is obsolete; ntfy was dropped because iOS banners didn't work.
   - Never print secrets. Action logs are public.
 - **Models:**
   - Image edit uses `IMAGE_MODEL`, set in the workflow, currently `gpt-image-2.5-sunburst`.
+  - FLUX renders use `FLUX_MODEL` on Replicate, currently `black-forest-labs/flux-2-flex`. The photo goes in as its raw GitHub URL; output becomes `<stem>--flux.png`.
+  - `RENDERERS` (default `openai,flux`) picks which run. A photo is done when every renderer's output exists; a retry renders only what's missing.
   - Classification uses `jev-latest`.
 - **Typesafe image API:**
   - Every request needs the `TypeSafe-Danger-Zone-Images: true` header.
@@ -42,7 +44,7 @@ The workflow then commits, pushes, and sends the success push through Bark, usin
 - **Idempotency:**
   - A photo is done for a theme once `transformed/<theme>/<stem>.png` exists, or once its `classifications/<stem>.json` says it isn't a pigeon.
   - To regenerate, delete the PNG. Old classifications with a top-level `direction` are read as `directions.christmas`. To force a rejected photo through, delete the JSON.
-- **Cost guard:** `MAX_PER_RUN = 1`, newest photo first. Don't raise it without asking, since every OpenAI edit costs money.
+- **Cost guard:** `MAX_PER_RUN = 1`, newest photo first, one render per renderer. Don't raise it without asking, since every OpenAI and FLUX render costs money.
 - **Determinism:** choices are seeded by theme plus filename, so re-runs pick the same direction.
 - **No loops:** bot commits use `GITHUB_TOKEN`, so they don't retrigger the workflow. The workflow does `git pull --rebase` before pushing, because the Shortcut may commit at the same time.
 - **Hardcoded repo path:** `vinceallenvince/walk-and-hack` appears in `index.html`, `scripts/transform.py`, the workflow, and the iOS Shortcut. Update all of them on a rename.
