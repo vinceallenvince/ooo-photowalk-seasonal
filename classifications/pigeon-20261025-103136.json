@@ -1,0 +1,51 @@
+{
+  "subject": "pigeon",
+  "setting": "street",
+  "activity": "walking",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 0.98,
+      "probabilities": {
+        "pigeon": 0.99,
+        "other_bird": 0.01,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "street",
+      "confidence": 1.0,
+      "probabilities": {
+        "indoors": 0.0,
+        "subway": 0.0,
+        "street": 1.0,
+        "park": 0.0,
+        "ledge": 0.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "walking",
+      "confidence": 0.27,
+      "probabilities": {
+        "eating": 0.34,
+        "walking": 0.45,
+        "perched": 0.21,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "halloween": {
+      "style": "street",
+      "costume": "a witch costume: a tall pointed black witch hat and a tattered black cape",
+      "props": [
+        "a miniature eye patch"
+      ],
+      "caption": "Coo-dini",
+      "phrase": "caption"
+    }
+  }
+}
