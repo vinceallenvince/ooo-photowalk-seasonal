@@ -1,0 +1,52 @@
+{
+  "subject": "pigeon",
+  "setting": "street",
+  "activity": "walking",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 0.98,
+      "probabilities": {
+        "pigeon": 0.99,
+        "other_bird": 0.01,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "street",
+      "confidence": 1.0,
+      "probabilities": {
+        "indoors": 0.0,
+        "subway": 0.0,
+        "street": 1.0,
+        "park": 0.0,
+        "ledge": 0.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "walking",
+      "confidence": 0.28,
+      "probabilities": {
+        "eating": 0.36,
+        "walking": 0.46,
+        "perched": 0.18,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "christmas": {
+      "style": "warm",
+      "garment": "a chunky hand-knitted Christmas sweater with snowflake and tree patterns",
+      "accessories": [
+        "a striped knitted Christmas scarf",
+        "a plush reindeer antler headband"
+      ],
+      "slogan": "Coo Ho Ho!",
+      "phrase": "slogan"
+    }
+  }
+}
