@@ -30,7 +30,7 @@ The workflow then commits, pushes, and sends the success push through Bark, usin
   - Never print secrets. Action logs are public.
 - **Models:**
   - Image edit uses `IMAGE_MODEL`, set in the workflow, currently `gpt-image-2.5-sunburst`.
-  - FLUX renders use `FLUX_MODEL` on Replicate, currently `black-forest-labs/flux-2-flex`. The photo goes in as its raw GitHub URL; output becomes `<stem>--flux.png`.
+  - FLUX renders use `FLUX_MODEL` on Replicate, currently `black-forest-labs/flux-2-max`; override with the repo variable `FLUX_MODEL` (FLUX.2 models only: they share the `input_images` input). The photo goes in as its raw GitHub URL; output becomes `<stem>--flux.png`.
   - `RENDERERS` (default `openai,flux`) picks which run. A photo is done when every renderer's output exists; a retry renders only what's missing.
   - Classification uses `jev-latest`.
 - **Typesafe image API:**
