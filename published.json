@@ -1,5 +1,12 @@
 [
   {
+    "file": "published/halloween/pigeon-20261025-154053.png",
+    "created": "2026-10-25T15:40:53",
+    "theme": "halloween",
+    "renderer": "openai",
+    "phrase": "Beak-a-Boo"
+  },
+  {
     "file": "published/halloween/pigeon-20261025-113757.png",
     "created": "2026-10-25T11:37:57",
     "theme": "halloween",
