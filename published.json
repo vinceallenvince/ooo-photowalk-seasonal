@@ -1,5 +1,12 @@
 [
   {
+    "file": "published/halloween/pigeon-20261026-100601.png",
+    "created": "2026-10-26T10:06:01",
+    "theme": "halloween",
+    "renderer": "openai",
+    "phrase": "Feather Frightening"
+  },
+  {
     "file": "published/halloween/pigeon-20261025-154053.png",
     "created": "2026-10-25T15:40:53",
     "theme": "halloween",
