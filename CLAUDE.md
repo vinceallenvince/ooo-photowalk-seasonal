@@ -44,6 +44,7 @@ The workflow then commits, pushes, and sends the success push through Bark, usin
 - **Idempotency:**
   - A photo is done for a theme once `transformed/<theme>/<stem>.png` exists, or once its `classifications/<stem>.json` says it isn't a pigeon.
   - To regenerate, delete the PNG. Old classifications with a top-level `direction` are read as `directions.christmas`. To force a rejected photo through, delete the JSON.
+- **Publishing (vinceallen.com):** the gallery's Publish link opens an issue titled `publish transformed/halloween/pigeon-….png` (or `unpublish …`). `.github/workflows/publish.yml` (owner's issues only) runs `scripts/publish.py`, which copies the render to `published/` and records it in `published.json`, newest first. vinceallen.com reads that manifest. `transformed/` is never touched.
 - **Cost guard:** `MAX_PER_RUN = 1`, newest photo first, one render per renderer. Don't raise it without asking, since every OpenAI and FLUX render costs money.
 - **Determinism:** choices are seeded by theme plus filename, so re-runs pick the same direction.
 - **No loops:** bot commits use `GITHUB_TOKEN`, so they don't retrigger the workflow. The workflow does `git pull --rebase` before pushing, because the Shortcut may commit at the same time.
