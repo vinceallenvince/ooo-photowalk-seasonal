@@ -7,6 +7,13 @@
     "phrase": "Beak-a-Boo"
   },
   {
+    "file": "published/halloween/pigeon-20261025-115237.png",
+    "created": "2026-10-25T11:52:37",
+    "theme": "halloween",
+    "renderer": "openai",
+    "phrase": "The Coo-ning"
+  },
+  {
     "file": "published/halloween/pigeon-20261025-113757.png",
     "created": "2026-10-25T11:37:57",
     "theme": "halloween",
