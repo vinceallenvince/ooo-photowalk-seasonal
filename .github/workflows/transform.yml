@@ -75,7 +75,7 @@ jobs:
             curl -s -X POST "https://api.day.app/$BARK_KEY" \
               --data-urlencode "title=$TITLE · $label" \
               --data-urlencode "body=$body" \
-              --data-urlencode "url=https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main/$out" \
+              --data-urlencode "url=https://raw.githubusercontent.com/vinceallenvince/ooo-photowalk-seasonal/main/$out" \
               --data-urlencode "group=pigeons" \
               --data-urlencode "level=timeSensitive" > /dev/null
           done

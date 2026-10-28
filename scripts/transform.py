@@ -49,7 +49,7 @@ if not RENDERERS or set(RENDERERS) - set(SUFFIX):
 
 REPLICATE_KEY = os.environ.get("REPLICATE_API_KEY")
 FLUX_MODEL = os.environ.get("FLUX_MODEL", "black-forest-labs/flux-2-max")
-RAW = "https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main"
+RAW = "https://raw.githubusercontent.com/vinceallenvince/ooo-photowalk-seasonal/main"
 
 TYPESAFE_URL = "https://api.typesafe.ai/v1/systemone"
 TYPESAFE_KEY = os.environ.get("TYPESAFE_API_KEY")
@@ -326,7 +326,7 @@ def notify_no_pigeon(path: pathlib.Path) -> None:
     if not key:
         return
     photo_url = (
-        "https://raw.githubusercontent.com/vinceallenvince/walk-and-hack/main/"
+        "https://raw.githubusercontent.com/vinceallenvince/ooo-photowalk-seasonal/main/"
         f"pigeons/{path.name}"
     )
     try:
