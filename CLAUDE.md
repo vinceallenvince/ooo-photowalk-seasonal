@@ -48,7 +48,7 @@ The workflow then commits, pushes, and sends the success push through Bark, usin
 - **Cost guard:** `MAX_PER_RUN = 1`, newest photo first, one render per renderer. Don't raise it without asking, since every OpenAI and FLUX render costs money.
 - **Determinism:** choices are seeded by theme plus filename, so re-runs pick the same direction.
 - **No loops:** bot commits use `GITHUB_TOKEN`, so they don't retrigger the workflow. The workflow does `git pull --rebase` before pushing, because the Shortcut may commit at the same time.
-- **Hardcoded repo path:** `vinceallenvince/walk-and-hack` appears in `index.html`, `scripts/transform.py`, the workflow, and the iOS Shortcut. Update all of them on a rename.
+- **Hardcoded repo path:** `vinceallenvince/ooo-photowalk-seasonal` appears in `index.html`, `scripts/transform.py`, the workflow, and the iOS Shortcut. Update all of them on a rename.
 - **Gallery limits:**
   - The Contents API allows 60 unauthenticated requests per hour per viewer, and lists at most 1,000 files per directory.
   - Raw URLs can be cached briefly by GitHub's CDN, so never overwrite a filename; write new ones.

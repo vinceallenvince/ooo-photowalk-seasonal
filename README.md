@@ -1,4 +1,4 @@
-# walk-and-hack
+# ooo-photowalk-seasonal
 
 Snap a pigeon on your iPhone. A minute later it's back on your phone, photorealistically dressed for the season: Halloween in October, Christmas in November and December.
 
@@ -21,7 +21,7 @@ Snap a pigeon on your iPhone. A minute later it's back on your phone, photoreali
 4. **Direct:** The script picks a theme (photo date, or the `THEME` repo variable), then the outfit from the setting and the slogan from the activity, using `themes/<theme>/direction.json`.
 5. **Transform:** OpenAI's image edit endpoint dresses the pigeon using `themes/<theme>/prompt.md`, filled with that direction.
 6. **Deliver:** The result is committed to `transformed/<theme>/`, and a [Bark](https://github.com/Finb/Bark) push shows the slogan and opens the image when tapped.
-7. **Browse:** Every transformed pigeon appears in the [gallery](https://vinceallenvince.github.io/walk-and-hack/), an edge-to-edge feed served by GitHub Pages.
+7. **Browse:** Every transformed pigeon appears in the [gallery](https://vinceallenvince.github.io/ooo-photowalk-seasonal/), an edge-to-edge feed served by GitHub Pages.
 
 ```
  iPhone
@@ -61,7 +61,7 @@ Snap a pigeon on your iPhone. A minute later it's back on your phone, photoreali
                        │
                        └──▶ GitHub Pages gallery (index.html)
                               reads transformed/<theme>/ via the GitHub API
-                              vinceallenvince.github.io/walk-and-hack/
+                              vinceallenvince.github.io/ooo-photowalk-seasonal/
 ```
 
 ## Repo layout
@@ -95,7 +95,7 @@ Repository secrets (Settings → Secrets and variables → Actions):
 On your phone, open **https://github.com/settings/personal-access-tokens/new** in Safari and create a fine-grained token:
 
 - **Expiration:** your call. Shorter is safer; when it expires, generate a new token and paste it into the `Authorization` header (action 8 below).
-- **Repository access:** Only select repositories → `walk-and-hack`
+- **Repository access:** Only select repositories → `ooo-photowalk-seasonal`
 - **Permissions:** Repository permissions → **Contents → Read and write**
 
 Copy the token right away, because GitHub shows it only once.
@@ -127,7 +127,7 @@ Add these actions in order, using the search bar at the bottom. Text in **bold**
 
 **Step 8, Get Contents of URL** ([method and headers](docs/shortcut/steps-07-08.png), [request body](docs/shortcut/steps-08-11.png)):
 
-- **URL:** `https://api.github.com/repos/vinceallenvince/walk-and-hack/contents/`**Text**
+- **URL:** `https://api.github.com/repos/vinceallenvince/ooo-photowalk-seasonal/contents/`**Text**
 - **Method:** `PUT`
 - **Headers:**
   - `Authorization`: `Bearer <your token>`, with the word `Bearer`, a space, then the token
