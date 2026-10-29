@@ -1,7 +1,6 @@
 {
   "name": "christmas",
   "title": "New Christmas pigeon 🎄",
-  "season": ["11-01", "12-31"],
   "placeholders": ["GARMENT", "SLOGAN", "ACCESSORIES"],
   "styles": {
     "light": {
