@@ -1,0 +1,52 @@
+{
+  "subject": "pigeon",
+  "setting": "ledge",
+  "activity": "perched",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 0.97,
+      "probabilities": {
+        "pigeon": 0.98,
+        "other_bird": 0.02,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "ledge",
+      "confidence": 1.0,
+      "probabilities": {
+        "indoors": 0.0,
+        "subway": 0.0,
+        "street": 0.0,
+        "park": 0.0,
+        "ledge": 1.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "perched",
+      "confidence": 1.0,
+      "probabilities": {
+        "eating": 0.0,
+        "walking": 0.0,
+        "perched": 1.0,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "christmas": {
+      "style": "warm",
+      "garment": "a red-and-green Fair Isle knitted Christmas sweater",
+      "accessories": [
+        "miniature red earmuffs",
+        "a striped knitted Christmas scarf"
+      ],
+      "slogan": "Silent Flight, Holy Flight",
+      "phrase": "slogan"
+    }
+  }
+}
