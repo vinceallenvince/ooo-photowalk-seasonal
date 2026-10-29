@@ -1,0 +1,51 @@
+{
+  "subject": "pigeon",
+  "setting": "ledge",
+  "activity": "perched",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 1.0,
+      "probabilities": {
+        "pigeon": 1.0,
+        "other_bird": 0.0,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "ledge",
+      "confidence": 1.0,
+      "probabilities": {
+        "indoors": 0.0,
+        "subway": 0.0,
+        "street": 0.0,
+        "park": 0.0,
+        "ledge": 1.0
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "perched",
+      "confidence": 0.99,
+      "probabilities": {
+        "eating": 0.01,
+        "walking": 0.0,
+        "perched": 0.99,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "halloween": {
+      "style": "ledge",
+      "costume": "a vampire costume: a black cape with a tall stiff red-lined collar, and a tiny pair of white plastic vampire fangs clipped over the tip of its beak",
+      "props": [
+        "a miniature gold medallion on a ribbon"
+      ],
+      "caption": "Feather Frightening",
+      "phrase": "caption"
+    }
+  }
+}
