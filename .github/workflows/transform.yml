@@ -6,10 +6,6 @@ on:
     paths: ["pigeons/**"]
   workflow_dispatch:
     inputs:
-      theme:
-        description: "Theme to use (blank = repo THEME variable, else by date)"
-        required: false
-        default: ""
       renderers:
         description: "Renderers, comma-separated: openai, flux (blank = repo RENDERERS variable, else openai)"
         required: false
@@ -38,7 +34,6 @@ jobs:
       - name: Transform new pigeons
         id: transform
         env:
-          THEME: ${{ inputs.theme || vars.THEME }}
           RENDERERS: ${{ inputs.renderers || vars.RENDERERS || 'openai' }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
@@ -51,7 +46,6 @@ jobs:
       - name: Commit results and notify
         env:
           BARK_KEY: ${{ secrets.BARK_KEY }}
-          THEME_NAME: ${{ steps.transform.outputs.theme }}
           TITLE: ${{ steps.transform.outputs.title }}
           PHRASE: ${{ steps.transform.outputs.phrase }}
           OUT_PATHS: ${{ steps.transform.outputs.paths }}
@@ -63,7 +57,7 @@ jobs:
             echo "Nothing new to commit"
             exit 0
           fi
-          git commit -m "${THEME_NAME:-Classified} pigeons"
+          git commit -m "Christmas pigeons"
           git pull --rebase
           git push
 
@@ -75,7 +69,7 @@ jobs:
             curl -s -X POST "https://api.day.app/$BARK_KEY" \
               --data-urlencode "title=$TITLE · $label" \
               --data-urlencode "body=$body" \
-              --data-urlencode "url=https://raw.githubusercontent.com/vinceallenvince/ooo-photowalk-seasonal/main/$out" \
+              --data-urlencode "url=https://raw.githubusercontent.com/vinceallenvince/ooo-photowalk-xmas/main/$out" \
               --data-urlencode "group=pigeons" \
               --data-urlencode "level=timeSensitive" > /dev/null
           done

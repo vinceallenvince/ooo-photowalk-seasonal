@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>OOO-photowalk: seasonal</title>
+<title>OOO-photowalk: xmas</title>
 <style>
   html, body { margin: 0; padding: 0; background: #000; }
   figure { position: relative; margin: 0; }
@@ -23,14 +23,13 @@
 <p id="status">Loading…</p>
 <main id="feed"></main>
 <script>
-  // ?theme=halloween shows one theme. PNGs directly in transformed/ predate
-  // themes and count as Christmas. Each image has a Publish link that opens a
-  // prefilled issue; .github/workflows/publish.yml does the rest.
-  const REPO = "vinceallenvince/ooo-photowalk-seasonal";
+  // Every Christmas render, newest first: transformed/christmas/ plus the PNGs
+  // directly in transformed/, which predate themes. Each image has a Publish
+  // link that opens a prefilled issue; .github/workflows/publish.yml does the rest.
+  const REPO = "vinceallenvince/ooo-photowalk-xmas";
   const API = `https://api.github.com/repos/${REPO}/contents/transformed`;
   const RAW = `https://raw.githubusercontent.com/${REPO}/main`;
   const LEGACY_THEME = "christmas";
-  const only = new URLSearchParams(location.search).get("theme");
   const feed = document.getElementById("feed");
   const status = document.getElementById("status");
   const isImg = f => f.type === "file" && /\.(png|jpe?g|webp)$/i.test(f.name);
@@ -43,10 +42,8 @@
 
   list(API)
     .then(root => {
-      const want = t => !only || only === t;
-      const legacy = want(LEGACY_THEME)
-        ? root.filter(isImg).map(f => ({ theme: LEGACY_THEME, f })) : [];
-      const dirs = root.filter(d => d.type === "dir" && want(d.name));
+      const legacy = root.filter(isImg).map(f => ({ theme: LEGACY_THEME, f }));
+      const dirs = root.filter(d => d.type === "dir" && d.name === LEGACY_THEME);
       return Promise.all(dirs.map(d =>
         list(d.url).then(files => files.filter(isImg).map(f => ({ theme: d.name, f })))
       )).then(lists => legacy.concat(...lists));

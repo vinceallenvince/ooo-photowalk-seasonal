@@ -38,15 +38,6 @@
     }
   },
   "directions": {
-    "halloween": {
-      "style": "park",
-      "costume": "a scarecrow costume: a frayed straw hat and a patched burlap vest with straw poking out of the seams",
-      "props": [
-        "a tiny orange jack-o'-lantern candy pail hooked over one wing"
-      ],
-      "caption": "Feather Frightening",
-      "phrase": "caption"
-    },
     "christmas": {
       "style": "warm",
       "garment": "a red-and-green Fair Isle knitted Christmas sweater",

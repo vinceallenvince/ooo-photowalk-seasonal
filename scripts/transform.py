@@ -1,7 +1,9 @@
 """Classify, then transform, every pigeon photo that hasn't been handled yet.
 
+This repo is the Christmas mode: every photo gets THEME ("christmas").
+
 Stage 1 (Typesafe / Jev): one request, three Choice questions about
-    pigeons/<name>.jpg — subject, setting, activity. Theme-independent.
+    pigeons/<name>.jpg — subject, setting, activity.
 Stage 2 (script): pick the theme's direction (style from the setting, phrase
     from the activity) using themes/<theme>/direction.json. Saved with the
     classification in classifications/<name>.json under directions.<theme>.
@@ -10,10 +12,6 @@ Stage 3 (renderers): only if the subject is a pigeon, fill
     RENDERERS (default "openai"): OpenAI writes transformed/<theme>/<name>.png,
     FLUX on Replicate writes transformed/<theme>/<name>--flux.png. Same prompt,
     so the two can be compared side by side.
-
-Theme, highest precedence first: the photo's subfolder
-(pigeons/<theme>/pigeon-*.jpg), the THEME env var, the theme whose "season"
-covers the photo's date, then DEFAULT_THEME.
 
 Idempotent: a photo is done for a theme once every renderer's output exists,
 or once it has been classified as not-a-pigeon. Only missing outputs render.
@@ -39,8 +37,8 @@ SRC = pathlib.Path("pigeons")
 OUT = pathlib.Path("transformed")
 CLS = pathlib.Path("classifications")
 THEMES = pathlib.Path("themes")
-DEFAULT_THEME = "christmas"
-LEGACY_THEME = "christmas"  # PNGs directly in transformed/ predate themes
+THEME = "christmas"  # the one theme this repo renders
+LEGACY_THEME = THEME  # PNGs directly in transformed/ predate themes
 MAX_PER_RUN = 1  # cost guard: newest photo only (one render per renderer)
 RENDERERS = [r.strip() for r in os.environ.get("RENDERERS", "openai").split(",") if r.strip()]
 SUFFIX = {"openai": "", "flux": "--flux"}  # output filename suffix per renderer
@@ -49,7 +47,7 @@ if not RENDERERS or set(RENDERERS) - set(SUFFIX):
 
 REPLICATE_KEY = os.environ.get("REPLICATE_API_KEY")
 FLUX_MODEL = os.environ.get("FLUX_MODEL", "black-forest-labs/flux-2-max")
-RAW = "https://raw.githubusercontent.com/vinceallenvince/ooo-photowalk-seasonal/main"
+RAW = "https://raw.githubusercontent.com/vinceallenvince/ooo-photowalk-xmas/main"
 
 TYPESAFE_URL = "https://api.typesafe.ai/v1/systemone"
 TYPESAFE_KEY = os.environ.get("TYPESAFE_API_KEY")
@@ -125,25 +123,6 @@ def load_theme(name: str) -> dict:
                 raise SystemExit(f"Theme {name}, style {key}: can't fill {sorted(missing)}")
     _themes[name] = theme
     return theme
-
-
-def theme_names() -> list:
-    return sorted(d.name for d in THEMES.iterdir() if (d / "direction.json").exists())
-
-
-def choose_theme(p: pathlib.Path) -> str:
-    if p.parent != SRC:
-        return p.parent.name
-    if os.environ.get("THEME"):
-        return os.environ["THEME"]
-    m = re.match(r"pigeon-\d{4}(\d{2})(\d{2})-", p.name)
-    if m:
-        mmdd = f"{m[1]}-{m[2]}"  # Shortcut stamps local (New York) time
-        for name in theme_names():
-            season = load_theme(name).get("season")
-            if season and season[0] <= mmdd <= season[1]:
-                return name
-    return DEFAULT_THEME
 
 
 def output_path(stem: str, theme: str, renderer: str = "openai") -> pathlib.Path:
@@ -325,10 +304,7 @@ def notify_no_pigeon(path: pathlib.Path) -> None:
     key = os.environ.get("BARK_KEY")
     if not key:
         return
-    photo_url = (
-        "https://raw.githubusercontent.com/vinceallenvince/ooo-photowalk-seasonal/main/"
-        f"pigeons/{path.name}"
-    )
+    photo_url = f"{RAW}/{path.as_posix()}"
     try:
         r = requests.post(
             f"https://api.day.app/{key}",
@@ -346,17 +322,9 @@ def notify_no_pigeon(path: pathlib.Path) -> None:
         print(f"   notification failed: {e}")
 
 
-photos = sorted(
-    [*SRC.glob("*.jpg"), *SRC.glob("*/*.jpg")], key=lambda p: p.name, reverse=True
-)  # newest first
-todo = []
-for p in photos:
-    if p.stat().st_size == 0:
-        continue
-    theme = choose_theme(p)
-    load_theme(theme)
-    if not is_done(p, theme):
-        todo.append((p, theme))
+load_theme(THEME)  # validate before anything else
+photos = sorted(SRC.glob("*.jpg"), key=lambda p: p.name, reverse=True)  # newest first
+todo = [(p, THEME) for p in photos if p.stat().st_size > 0 and not is_done(p, THEME)]
 todo = todo[:MAX_PER_RUN]
 
 if not todo:

@@ -1,7 +1,7 @@
 name: Publish
 
 # The gallery's Publish link opens an issue titled
-# "publish transformed/<theme>/<file>.png" (or "unpublish ..."). Only the repo
+# "publish transformed/christmas/<file>.png" (or "unpublish ..."). Only the repo
 # owner's issues count; anyone else's are ignored.
 on:
   issues:
@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       command:
-        description: "publish|unpublish transformed/<theme>/<file>.png"
+        description: "publish|unpublish transformed/christmas/<file>.png"
         required: true
 
 permissions:

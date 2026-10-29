@@ -1,7 +1,8 @@
 """Publish or unpublish a render for vinceallen.com.
 
 COMMAND is "publish <path>" or "unpublish <path>", where <path> is a render
-under transformed/ (e.g. transformed/halloween/pigeon-20261025-090554.png).
+under transformed/christmas/ (e.g. transformed/christmas/pigeon-20261025-102825.png),
+or a pre-theme render directly in transformed/.
 It comes from an issue title (the gallery's Publish link) or workflow_dispatch.
 
 Publishing copies the render to published/<theme>/<name> and records it in
@@ -21,7 +22,7 @@ MANIFEST = ROOT / "published.json"
 LEGACY_THEME = "christmas"  # PNGs directly in transformed/ predate themes
 COMMAND = re.compile(
     r"^(publish|unpublish)\s+"
-    r"(transformed/(?:([a-z0-9-]+)/)?(pigeon-(\d{8})-(\d{6})(?:--(\w+))?\.png))\s*$"
+    r"(transformed/(?:(christmas)/)?(pigeon-(\d{8})-(\d{6})(?:--(\w+))?\.png))\s*$"
 )
 
 
@@ -45,7 +46,7 @@ def phrase(stem, theme):
 def main():
     m = COMMAND.match(os.environ.get("COMMAND", "").strip())
     if not m:
-        output("result", "Expected: publish|unpublish transformed/<theme>/pigeon-yyyyMMdd-HHmmss.png")
+        output("result", "Expected: publish|unpublish transformed/christmas/pigeon-yyyyMMdd-HHmmss.png")
         sys.exit(1)
     action, src, theme, name, day, time, renderer = m.groups()
     theme = theme or LEGACY_THEME
