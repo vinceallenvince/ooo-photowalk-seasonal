@@ -1,0 +1,52 @@
+{
+  "subject": "pigeon",
+  "setting": "ledge",
+  "activity": "perched",
+  "raw": {
+    "subject": {
+      "type": "choice",
+      "choice": "pigeon",
+      "confidence": 1.0,
+      "probabilities": {
+        "pigeon": 1.0,
+        "other_bird": 0.0,
+        "no_bird": 0.0
+      }
+    },
+    "setting": {
+      "type": "choice",
+      "choice": "ledge",
+      "confidence": 0.95,
+      "probabilities": {
+        "indoors": 0.0,
+        "subway": 0.0,
+        "street": 0.04,
+        "park": 0.0,
+        "ledge": 0.96
+      }
+    },
+    "activity": {
+      "type": "choice",
+      "choice": "perched",
+      "confidence": 1.0,
+      "probabilities": {
+        "eating": 0.0,
+        "walking": 0.0,
+        "perched": 1.0,
+        "flying": 0.0
+      }
+    }
+  },
+  "directions": {
+    "christmas": {
+      "style": "warm",
+      "garment": "a chunky hand-knitted Christmas sweater with snowflake and tree patterns",
+      "accessories": [
+        "a Santa hat with white fur trim",
+        "a plush reindeer antler headband"
+      ],
+      "slogan": "Merry Birdmas",
+      "phrase": "slogan"
+    }
+  }
+}
